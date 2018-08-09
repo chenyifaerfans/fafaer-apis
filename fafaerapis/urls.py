@@ -14,25 +14,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from django.contrib import admin
-from django.views.static import serve
-from .settings import MEDIA_ROOT
 
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 
 from mp.views import BannerViewset, ProfileViewset, ProfileDetailViewset
+from music.views import SingerViewset, AlbumViewset, AudioViewset, SongViewset
 
 import xadmin
 
 router = DefaultRouter()
-router.register(r'banner', BannerViewset, base_name='banner')
-router.register(r'profile', ProfileViewset, base_name='profile')
-router.register(r'detail', ProfileDetailViewset, base_name='detail')
+router.register(r'mp/banner', BannerViewset, base_name='banner')
+router.register(r'mp/profile', ProfileViewset, base_name='profile')
+router.register(r'mp/detail', ProfileDetailViewset, base_name='detail')
+router.register(r'music/singer', SingerViewset, base_name='singer')
+router.register(r'music/album', AlbumViewset, base_name='album')
+router.register(r'music/audio', AudioViewset, base_name='audio')
+router.register(r'music/song', SongViewset, base_name='song')
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
-    # url(r'^media/(?P<path>.*)/$', serve, {"document_root": MEDIA_ROOT}),
 
     url(r'^docs/', include_docs_urls(title='文档')),
 

@@ -11,9 +11,13 @@ class Banner(models.Model):
     name = models.CharField(max_length=20, verbose_name=u"标题")
     desc = models.CharField(max_length=100, verbose_name=u"描述")
     image = models.ImageField(upload_to="banner/%Y/%m", max_length=100, verbose_name=u"封面")
-    order = models.IntegerField(default=10, verbose_name=u"排序")
+    order = models.IntegerField(default=10, verbose_name=u"排序", help_text="排序字段")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
     is_del = models.IntegerField(choices=IS_DEL_CHOICES, default=0, verbose_name=u"是否删除")
+
+    def delete(self):
+        self.is_del = 1
+        self.save()
 
     class Meta:
         verbose_name = u"轮播图"
@@ -31,6 +35,10 @@ class Profile(models.Model):
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
     is_del = models.IntegerField(choices=IS_DEL_CHOICES, default=0, verbose_name=u"是否删除")
 
+    def delete(self):
+        self.is_del = 1
+        self.save()
+
     class Meta:
         verbose_name = u"简介"
         verbose_name_plural = verbose_name
@@ -42,11 +50,15 @@ class Profile(models.Model):
 class ProfileDetail(models.Model):
     title = models.CharField(max_length=20, verbose_name=u"标题")
     content = models.CharField(max_length=100, verbose_name=u"内容")
-    type = models.CharField(choices=CONTENT_CHOICES, max_length=8, verbose_name=u"类型")
+    type = models.CharField(choices=CONTENT_CHOICES, max_length=8, verbose_name=u"类型", help_text=u'类型')
     image = models.ImageField(upload_to="content/%Y/%m", max_length=100, verbose_name=u"封面")
     order = models.IntegerField(default=10, verbose_name=u"排序")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
     is_del = models.IntegerField(choices=IS_DEL_CHOICES, default=0, verbose_name=u"是否删除")
+
+    def delete(self):
+        self.is_del = 1
+        self.save()
 
     class Meta:
         verbose_name = u"个人资料"

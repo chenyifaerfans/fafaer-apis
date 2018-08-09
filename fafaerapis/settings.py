@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'users.apps.UsersConfig',
     'mp.apps.MpConfig',
+    'music.apps.MusicConfig',
+    'videos.apps.VideosConfig'
 ]
 
 AUTH_USER_MODEL = "users.User"
@@ -152,4 +154,4 @@ DEFAULT_FILE_STORAGE = 'django_oss_storage.backends.OssMediaStorage'
 OSS_ACCESS_KEY_ID = 'LTAIzh4ZeURSvNKz'
 OSS_ACCESS_KEY_SECRET = 'Gqk7nfN7JoYPMZDGa9UwDK27wANLQv'
 OSS_BUCKET_NAME = 'fafaer'
-OSS_ENDPOINT = 'oss-cn-qingdao.aliyuncs.com'
+OSS_ENDPOINT = 'cdn.chenyifaer.com'

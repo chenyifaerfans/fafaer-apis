@@ -17,7 +17,7 @@ class BannerViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
     """
     queryset = Banner.objects.filter(is_del=0)
     serializer_class = BannerSerializer
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
     ordering_fields = ('order', )
 
 
