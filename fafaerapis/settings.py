@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'mp.apps.MpConfig',
     'music.apps.MusicConfig',
-    'videos.apps.VideosConfig'
+    'videos.apps.VideosConfig',
+    'photos.apps.PhotosConfig'
 ]
 
 AUTH_USER_MODEL = "users.User"

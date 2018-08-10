@@ -5,6 +5,7 @@ __date__ = '2018/8/9 12:42'
 import xadmin
 
 from .models import Singer, Album, Audio, Song, AlbumDetail, AudioDetail
+from common.base import CommonAdmin
 
 
 class AlbumDetailInline(object):
@@ -17,7 +18,7 @@ class AudioDetailInline(object):
     extra = 0
 
 
-class SingerAdmin(object):
+class SingerAdmin(CommonAdmin):
     list_display = ['nickname', 'desc', 'avatar', 'background_img', 'birthday', 'gender', 'address']
     search_fields = ['nickname', 'desc', 'avatar', 'address']
     list_filter = ['nickname', 'desc', 'avatar', 'background_img']
@@ -27,7 +28,7 @@ class SingerAdmin(object):
         return qs.filter(is_del=0)
 
 
-class AlbumAdmin(object):
+class AlbumAdmin(CommonAdmin):
     list_display = ['name', 'desc', 'singer', 'cover_img', 'bg_img', 'release_date', 'release_company']
     search_fields = ['name', 'desc', 'singer', 'release_date', 'release_company',]
     list_filter = ['name', 'singer', 'release_date']
@@ -38,7 +39,7 @@ class AlbumAdmin(object):
         return qs.filter(is_del=0)
 
 
-class AudioAdmin(object):
+class AudioAdmin(CommonAdmin):
     list_display = ['name', 'desc', 'singer']
     search_fields = ['name', 'desc', 'singer']
     list_filter = ['name', 'desc', 'singer']
@@ -49,7 +50,7 @@ class AudioAdmin(object):
         return qs.filter(is_del=0)
 
 
-class SongAdmin(object):
+class SongAdmin(CommonAdmin):
     list_display = ['name', 'desc', 'singer', 'album', 'audio', 'duration', 'hits', 'file']
     search_fields = ['name', 'desc', 'singer']
     list_filter = ['name', 'desc', 'singer']
@@ -59,7 +60,7 @@ class SongAdmin(object):
         return qs.filter(is_del=0)
 
 
-class AlbumDetailAdmin(object):
+class AlbumDetailAdmin(CommonAdmin):
     list_display = ['album', 'song', 'add_time']
     search_fields = ['album', 'song']
     list_filter = ['album', 'song']
@@ -69,7 +70,7 @@ class AlbumDetailAdmin(object):
         return qs.filter(is_del=0)
 
 
-class AudioDetailAdmin(object):
+class AudioDetailAdmin(CommonAdmin):
     list_display = ['audio', 'song', 'add_time']
     search_fields = ['audio', 'song']
     list_filter = ['audio', 'song']

@@ -18,10 +18,6 @@ class Singer(models.Model):
     update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")
     is_del = models.IntegerField(choices=IS_DEL_CHOICES, default=0, verbose_name=u"是否删除")
 
-    def delete(self):
-        self.is_del = 1
-        self.save()
-
     class Meta:
         verbose_name = "歌手"
         verbose_name_plural = verbose_name

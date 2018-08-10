@@ -15,10 +15,6 @@ class Banner(models.Model):
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
     is_del = models.IntegerField(choices=IS_DEL_CHOICES, default=0, verbose_name=u"是否删除")
 
-    def delete(self):
-        self.is_del = 1
-        self.save()
-
     class Meta:
         verbose_name = u"轮播图"
         verbose_name_plural = verbose_name
@@ -34,10 +30,6 @@ class Profile(models.Model):
                                verbose_name=u"头像")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
     is_del = models.IntegerField(choices=IS_DEL_CHOICES, default=0, verbose_name=u"是否删除")
-
-    def delete(self):
-        self.is_del = 1
-        self.save()
 
     class Meta:
         verbose_name = u"简介"
@@ -55,10 +47,6 @@ class ProfileDetail(models.Model):
     order = models.IntegerField(default=10, verbose_name=u"排序")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
     is_del = models.IntegerField(choices=IS_DEL_CHOICES, default=0, verbose_name=u"是否删除")
-
-    def delete(self):
-        self.is_del = 1
-        self.save()
 
     class Meta:
         verbose_name = u"个人资料"

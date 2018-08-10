@@ -20,6 +20,7 @@ from rest_framework.routers import DefaultRouter
 
 from mp.views import BannerViewset, ProfileViewset, ProfileDetailViewset
 from music.views import SingerViewset, AlbumViewset, AudioViewset, SongViewset
+from photos.views import GalleryViewset
 
 import xadmin
 
@@ -31,6 +32,7 @@ router.register(r'music/singer', SingerViewset, base_name='singer')
 router.register(r'music/album', AlbumViewset, base_name='album')
 router.register(r'music/audio', AudioViewset, base_name='audio')
 router.register(r'music/song', SongViewset, base_name='song')
+router.register(r'photo/gallery', GalleryViewset, base_name='gallery')
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),

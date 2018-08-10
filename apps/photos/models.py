@@ -1,0 +1,56 @@
+from datetime import datetime
+
+from django.db import models
+
+from common.choices import IS_DEL_CHOICES
+
+
+class Gallery(models.Model):
+    name = models.CharField(max_length=20, verbose_name="相册名")
+    desc = models.CharField(max_length=100, verbose_name=u"描述")
+    date = models.DateField(default=datetime.now, verbose_name=u'日期')
+
+    add_time = models.DateTimeField(default=datetime.now, verbose_name=u"创建时间")
+    update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")
+    is_del = models.IntegerField(choices=IS_DEL_CHOICES, default=0, verbose_name=u"是否删除")
+
+    class Meta:
+        verbose_name = '相册'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+
+class Photo(models.Model):
+    name = models.CharField(max_length=20, verbose_name="照片名称")
+    desc = models.CharField(max_length=100, verbose_name=u"照片描述")
+    file = models.FileField(upload_to="photo/%Y/%m", verbose_name=u"照片文件")
+    date = models.DateField(default=datetime.now, verbose_name=u'拍摄日期')
+
+    add_time = models.DateTimeField(default=datetime.now, verbose_name=u"创建时间")
+    update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")
+    is_del = models.IntegerField(choices=IS_DEL_CHOICES, default=0, verbose_name=u"是否删除")
+
+    class Meta:
+        verbose_name = '照片'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+
+class GalleryDetail(models.Model):
+    gallery = models.ForeignKey(Gallery, related_name='photos', verbose_name='相册')
+    photo = models.ForeignKey(Photo, verbose_name='照片')
+
+    add_time = models.DateTimeField(default=datetime.now, verbose_name=u"创建时间")
+    update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")
+    is_del = models.IntegerField(choices=IS_DEL_CHOICES, default=0, verbose_name=u"是否删除")
+
+    class Meta:
+        verbose_name = '相册明细'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.gallery.name
