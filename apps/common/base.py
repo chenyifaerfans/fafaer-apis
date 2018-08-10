@@ -2,6 +2,7 @@
 __author__ = 'WANGY'
 __date__ = '2018/8/10 10:57'
 from django.utils.translation import ugettext as _, ungettext
+from rest_framework import serializers
 from xadmin.plugins.actions import BaseActionView
 from xadmin.util import model_format_dict, model_ngettext
 
@@ -36,3 +37,11 @@ class CommonAdmin(object):
             self.obj.save()
         else:
             self.obj.delete()
+
+
+class CommonSerializer(serializers.ModelSerializer):
+    add_timestamp = serializers.SerializerMethodField(source='add_time', method_name='convert_time')
+    update_timestamp = serializers.SerializerMethodField(source='update_time', method_name='convert_time')
+
+    def convert_time(self, obj):
+        return obj.add_time.timestamp()

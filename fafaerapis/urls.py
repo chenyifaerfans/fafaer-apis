@@ -17,29 +17,46 @@ from django.conf.urls import url, include
 
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
+from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_jwt.views import refresh_jwt_token
+from rest_framework_jwt.views import verify_jwt_token
 
 from mp.views import BannerViewset, ProfileViewset, ProfileDetailViewset
 from music.views import SingerViewset, AlbumViewset, AudioViewset, SongViewset
-from photos.views import GalleryViewset
+from photos.views import GalleryViewset, PhotoViewset, GalleryDetailViewset
+from videos.views import VideoCollectionViewset, VideoViewset, VideoCollectionDetailViewset
 
 import xadmin
 
 router = DefaultRouter()
 router.register(r'mp/banner', BannerViewset, base_name='banner')
 router.register(r'mp/profile', ProfileViewset, base_name='profile')
-router.register(r'mp/detail', ProfileDetailViewset, base_name='detail')
+router.register(r'mp/detail', ProfileDetailViewset, base_name='mp_detail')
+
 router.register(r'music/singer', SingerViewset, base_name='singer')
 router.register(r'music/album', AlbumViewset, base_name='album')
 router.register(r'music/audio', AudioViewset, base_name='audio')
 router.register(r'music/song', SongViewset, base_name='song')
-router.register(r'photo/gallery', GalleryViewset, base_name='gallery')
+
+router.register(r'photos/gallery', GalleryViewset, base_name='gallery')
+router.register(r'photos/photo', PhotoViewset, base_name='photo')
+router.register(r'photos/detail', GalleryDetailViewset, base_name='detail')
+
+router.register(r'videos/collection', VideoCollectionViewset, base_name='collection')
+router.register(r'videos/video', VideoViewset, base_name='video')
+router.register(r'videos/detail', VideoCollectionDetailViewset, base_name='collection_detail')
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
 
+    #
     url(r'^docs/', include_docs_urls(title='文档')),
-
     url(r'^api-auth/', include('rest_framework.urls')),
+
+    # JWT
+    url(r'^jwt-auth/', obtain_jwt_token),
+    url(r'^jwt-token-refresh/', refresh_jwt_token),
+    url(r'^jwt-token-verify/', verify_jwt_token),
 
     url(r'^', include(router.urls))
 ]

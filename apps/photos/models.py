@@ -6,7 +6,7 @@ from common.choices import IS_DEL_CHOICES
 
 
 class Gallery(models.Model):
-    name = models.CharField(max_length=20, verbose_name="相册名")
+    name = models.CharField(max_length=20, unique=True, verbose_name="相册名")
     desc = models.CharField(max_length=100, verbose_name=u"描述")
     date = models.DateField(default=datetime.now, verbose_name=u'日期')
 
@@ -23,7 +23,7 @@ class Gallery(models.Model):
 
 
 class Photo(models.Model):
-    name = models.CharField(max_length=20, verbose_name="照片名称")
+    name = models.CharField(max_length=20, unique=True, verbose_name="照片名称")
     desc = models.CharField(max_length=100, verbose_name=u"照片描述")
     file = models.FileField(upload_to="photo/%Y/%m", verbose_name=u"照片文件")
     date = models.DateField(default=datetime.now, verbose_name=u'拍摄日期')
@@ -51,6 +51,7 @@ class GalleryDetail(models.Model):
     class Meta:
         verbose_name = '相册明细'
         verbose_name_plural = verbose_name
+        unique_together = ("gallery", "photo")
 
     def __str__(self):
         return self.gallery.name

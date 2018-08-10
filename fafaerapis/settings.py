@@ -156,3 +156,14 @@ OSS_ACCESS_KEY_ID = 'LTAIzh4ZeURSvNKz'
 OSS_ACCESS_KEY_SECRET = 'Gqk7nfN7JoYPMZDGa9UwDK27wANLQv'
 OSS_BUCKET_NAME = 'fafaer'
 OSS_ENDPOINT = 'cdn.chenyifaer.com'
+
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    )
+}
