@@ -9,7 +9,8 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from common.permissions import IsOwnerOrReadOnly
 from .models import Singer, Album, Audio, Song, AlbumDetail, AudioDetail
 from .serializers import SingerSerializer, AlbumSerializer, AudioSerializer, SongSerializer, AlbumListDetailSerializer, \
-    AudioListDetailSerializer, AlbumDetailSerializer, AlbumDetail2Serializer, AudioDetailSerializer, AudioDetail2Serializer
+    AudioListDetailSerializer, AlbumDetailSerializer, AlbumDetail2Serializer, AudioDetailSerializer, \
+    AudioDetail2Serializer, Album2Serializer, Audio2Serializer
 from .filters import SingerFilter, AlbumFilter, AudioFilter, SongFilter
 from .paginations import CommonPagination
 
@@ -60,6 +61,8 @@ class AlbumViewset(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == "retrieve":
             return AlbumListDetailSerializer
+        if self.action == "create" or self.action == "update":
+            return Album2Serializer
         return AlbumSerializer
 
     def get_permissions(self):
@@ -104,6 +107,8 @@ class AudioViewset(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == "retrieve":
             return AudioListDetailSerializer
+        if self.action == "create" or self.action == "update":
+            return Audio2Serializer
         return AudioSerializer
 
     def get_permissions(self):
