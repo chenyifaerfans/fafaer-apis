@@ -1,8 +1,11 @@
 # _*_ coding:utf-8 _*_
 from datetime import datetime
 from django.db import models
+from django.contrib.auth import get_user_model
 
-from common.choices import GENDER_CHOICES, IS_DEL_CHOICES, IS_VALID_CHOICES
+from common.choices import GENDER_CHOICES, IS_DEL_CHOICES
+
+User = get_user_model()
 
 
 class Singer(models.Model):
@@ -34,6 +37,7 @@ class Album(models.Model):
     bg_img = models.ImageField(upload_to="singer/background/%Y/%m", max_length=100, verbose_name='专辑背景图片')
     release_date = models.DateField(default=datetime.now, verbose_name='发行时间')
     release_company = models.CharField(default='', max_length=30, verbose_name='发行公司')
+    user = models.ForeignKey(User, verbose_name=u"创建用户")
 
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"创建时间")
     update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")
@@ -51,6 +55,7 @@ class Audio(models.Model):
     name = models.CharField(max_length=20, verbose_name="电台名")
     desc = models.CharField(max_length=100, verbose_name=u"描述")
     singer = models.ForeignKey(Singer, verbose_name='歌手')
+    user = models.ForeignKey(User, verbose_name=u"创建用户")
 
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"创建时间")
     update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")
@@ -71,6 +76,7 @@ class Song(models.Model):
     duration = models.DecimalField(max_digits=6, decimal_places=3, default=0, verbose_name=u"歌曲时长")
     hits = models.IntegerField(default=0, verbose_name=u"播放量")
     file = models.FileField(upload_to="song/%Y/%m", verbose_name=u"歌曲文件")
+    user = models.ForeignKey(User, verbose_name=u"创建用户")
 
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"创建时间")
     update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")
@@ -87,6 +93,7 @@ class Song(models.Model):
 class AlbumDetail(models.Model):
     album = models.ForeignKey(Album, related_name='songs', verbose_name=u'专辑')
     song = models.ForeignKey(Song, verbose_name=u'歌曲')
+    user = models.ForeignKey(User, verbose_name=u"创建用户")
 
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"创建时间")
     update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")
@@ -104,6 +111,7 @@ class AlbumDetail(models.Model):
 class AudioDetail(models.Model):
     audio = models.ForeignKey(Audio, related_name='songs', verbose_name=u'电台')
     song = models.ForeignKey(Song, verbose_name=u'歌曲')
+    user = models.ForeignKey(User, verbose_name=u"创建用户")
 
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"创建时间")
     update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")

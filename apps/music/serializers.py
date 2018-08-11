@@ -1,6 +1,7 @@
 # _*_ coding:utf-8 _*_
 __author__ = 'WANGY'
 __date__ = '2018/8/9 12:43'
+from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
 from .models import Singer, Album, Audio, Song, AlbumDetail, AudioDetail
@@ -8,6 +9,8 @@ from common.base import CommonSerializer
 
 
 class SingerSerializer(CommonSerializer):
+    # nickname = serializers.CharField(required=True)
+
     class Meta:
         model = Singer
         exclude = ('is_del', 'add_time', 'update_time')
@@ -15,6 +18,9 @@ class SingerSerializer(CommonSerializer):
 
 class AlbumSerializer(CommonSerializer):
     singer = SingerSerializer()
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
 
     class Meta:
         model = Album
@@ -23,6 +29,9 @@ class AlbumSerializer(CommonSerializer):
 
 class AudioSerializer(CommonSerializer):
     singer = SingerSerializer()
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
 
     class Meta:
         model = Audio
@@ -31,6 +40,9 @@ class AudioSerializer(CommonSerializer):
 
 class SongSerializer(CommonSerializer):
     singer = SingerSerializer()
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
 
     class Meta:
         model = Song
@@ -41,6 +53,16 @@ class SongSerializer(CommonSerializer):
 class AlbumDetailSerializer(CommonSerializer):
     album = AlbumSerializer(many=False)
     song = SongSerializer(many=False)
+
+    class Meta:
+        model = AlbumDetail
+        exclude = ('id', 'add_time', 'update_time', 'is_del')
+
+
+class AlbumDetail2Serializer(CommonSerializer):
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
 
     class Meta:
         model = AlbumDetail
@@ -65,6 +87,16 @@ class AlbumListDetailSerializer(CommonSerializer):
 class AudioDetailSerializer(CommonSerializer):
     audio = AudioSerializer(many=False)
     song = SongSerializer(many=False)
+
+    class Meta:
+        model = AudioDetail
+        exclude = ('is_del', 'add_time', 'update_time')
+
+
+class AudioDetail2Serializer(CommonSerializer):
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
 
     class Meta:
         model = AudioDetail

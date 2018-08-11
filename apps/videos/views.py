@@ -1,5 +1,4 @@
 from rest_framework import filters
-from rest_framework import mixins
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
@@ -32,7 +31,6 @@ class VideoCollectionViewset(viewsets.ModelViewSet):
     删除视频合集
 
     """
-    # queryset = VideoCollection.objects.filter(is_del=0)
     pagination_class = CommonPagination
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
@@ -108,7 +106,7 @@ class VideoCollectionDetailViewset(viewsets.ModelViewSet):
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 
     def get_serializer_class(self):
-        if self.action == "create":
+        if self.action == "create" or self.action == "update":
             return VideoCollectionDetail2Serializer
         return VideoCollectionDetailSerializer
 

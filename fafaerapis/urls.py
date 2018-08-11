@@ -24,7 +24,7 @@ from rest_framework_jwt.views import verify_jwt_token
 
 from users.views import UserViewset
 from mp.views import BannerViewset, ProfileViewset, ProfileDetailViewset
-from music.views import SingerViewset, AlbumViewset, AudioViewset, SongViewset
+from music.views import SingerViewset, AlbumViewset, AudioViewset, SongViewset, AlbumDetailViewset, AudioDetailViewset
 from photos.views import GalleryViewset, PhotoViewset, GalleryDetailViewset
 from videos.views import VideoCollectionViewset, VideoViewset, VideoCollectionDetailViewset
 
@@ -39,7 +39,9 @@ router.register(r'mp/detail', ProfileDetailViewset, base_name='mp_detail')
 
 router.register(r'music/singer', SingerViewset, base_name='singer')
 router.register(r'music/album', AlbumViewset, base_name='album')
+router.register(r'music/album_detail', AlbumDetailViewset, base_name='album_detail')
 router.register(r'music/audio', AudioViewset, base_name='audio')
+router.register(r'music/audio_detail', AudioDetailViewset, base_name='audio_detail')
 router.register(r'music/song', SongViewset, base_name='song')
 
 router.register(r'photos/gallery', GalleryViewset, base_name='gallery')
