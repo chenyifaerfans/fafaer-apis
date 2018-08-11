@@ -1,14 +1,18 @@
 from datetime import datetime
 
 from django.db import models
+from django.contrib.auth import get_user_model
 
 from common.choices import IS_DEL_CHOICES
+
+User = get_user_model()
 
 
 class Gallery(models.Model):
     name = models.CharField(max_length=20, unique=True, verbose_name="相册名")
     desc = models.CharField(max_length=100, verbose_name=u"描述")
     date = models.DateField(default=datetime.now, verbose_name=u'日期')
+    user = models.ForeignKey(User, verbose_name=u"创建用户")
 
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"创建时间")
     update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")
@@ -27,6 +31,7 @@ class Photo(models.Model):
     desc = models.CharField(max_length=100, verbose_name=u"照片描述")
     file = models.FileField(upload_to="photo/%Y/%m", verbose_name=u"照片文件")
     date = models.DateField(default=datetime.now, verbose_name=u'拍摄日期')
+    user = models.ForeignKey(User, verbose_name=u"创建用户")
 
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"创建时间")
     update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")
@@ -43,6 +48,7 @@ class Photo(models.Model):
 class GalleryDetail(models.Model):
     gallery = models.ForeignKey(Gallery, related_name='photos', verbose_name='相册')
     photo = models.ForeignKey(Photo, verbose_name='照片')
+    user = models.ForeignKey(User, verbose_name=u"创建用户")
 
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"创建时间")
     update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")

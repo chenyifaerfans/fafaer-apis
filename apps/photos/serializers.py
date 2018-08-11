@@ -1,6 +1,7 @@
 # _*_ coding:utf-8 _*_
 __author__ = 'WANGY'
 __date__ = '2018/8/9 12:43'
+from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
 from .models import Gallery, Photo, GalleryDetail
@@ -8,6 +9,9 @@ from common.base import CommonSerializer
 
 
 class GallerySerializer(CommonSerializer):
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
 
     class Meta:
         model = Gallery
@@ -15,6 +19,9 @@ class GallerySerializer(CommonSerializer):
 
 
 class PhotoSerializer(CommonSerializer):
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
 
     class Meta:
         model = Photo
@@ -31,6 +38,9 @@ class GalleryDetailSerializer(CommonSerializer):
 
 
 class GalleryDetail2Serializer(CommonSerializer):
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
 
     class Meta:
         model = GalleryDetail

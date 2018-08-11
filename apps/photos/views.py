@@ -16,7 +16,7 @@ from .serializers import GallerySerializer, PhotoSerializer, GalleryListDetailSe
     GalleryDetail2Serializer
 
 
-class GalleryViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+class GalleryViewset(viewsets.ModelViewSet):
     """
     list:
     查询所有相册
@@ -26,8 +26,8 @@ class GalleryViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.Cr
 
     """
 
-    queryset = Gallery.objects.filter(is_del=0)
     pagination_class = CommonPagination
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_class = GalleryFilter
     search_fields = ('name', 'desc')
@@ -35,48 +35,77 @@ class GalleryViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.Cr
 
     def get_permissions(self):
         if self.action == "create":
+            return [IsAuthenticated()]
+        if self.action == "update" or self.action == "destroy":
             return [IsAuthenticated(), IsOwnerOrReadOnly()]
-        return super(self).get_permissions()
-
-    def get_authenticators(self):
-        if self.action == "create":
-            return [JSONWebTokenAuthentication(), SessionAuthentication()]
-        return super(self).get_authenticators()
+        return super(GalleryViewset, self).get_permissions()
 
     def get_serializer_class(self):
         if self.action == "retrieve":
             return GalleryListDetailSerializer
         return GallerySerializer
 
+    def get_queryset(self):
+        if self.action == "list":
+            return Gallery.objects.filter(is_del=0)
+        return Gallery.objects.filter(is_del=0, user=self.request.user)
 
-class PhotoViewset(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+
+class PhotoViewset(viewsets.ModelViewSet):
     """
     list:
     查询所有相册
 
     retrieve:
-    查看某一相册明细
+    查看某一照片明细
+
+    create:
+    添加图片
+
+    update:
+    更新图片
+
+    destroy：
+    删除图片
     """
     pagination_class = CommonPagination
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     serializer_class = PhotoSerializer
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    # filter_class = GalleryFilter
+    search_fields = ('name', 'desc')
+    ordering_fields = ('add_time',)
 
     def get_queryset(self):
-        return Photo.objects.filter(is_del=0)
+        return Photo.objects.filter(is_del=0, user=self.request.user)
 
 
-class GalleryDetailViewset(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+class GalleryDetailViewset(viewsets.ModelViewSet):
     """
     list:
     查询所有相册详情
 
     retrieve:
     查看某一相册详情
+
+    create:
+    向相册中添加图片
+
+    update:
+    更新相册中的图片
+
+    destroy：
+    删除相册中的图片
+
     """
     pagination_class = CommonPagination
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    # filter_class = GalleryFilter
+    search_fields = ('name', 'desc')
+    ordering_fields = ('add_time',)
 
     def get_serializer_class(self):
         if self.action == "create":
@@ -84,4 +113,4 @@ class GalleryDetailViewset(mixins.ListModelMixin, mixins.CreateModelMixin, views
         return GalleryDetailSerializer
 
     def get_queryset(self):
-        return GalleryDetail.objects.filter(is_del=0)
+        return GalleryDetail.objects.filter(is_del=0, user=self.request.user)

@@ -9,33 +9,39 @@ from common.base import CommonAdmin
 
 
 class GalleryAdmin(CommonAdmin):
-    list_display = ['name', 'desc', 'date', 'add_time']
+    list_display = ['name', 'desc', 'date', 'user', 'add_time']
     search_fields = ['name', 'desc', 'date']
     list_filter = ['name', 'desc', 'date']
 
     def queryset(self):
         qs = super(GalleryAdmin, self).queryset()
-        return qs.filter(is_del=0)
+        if self.request.user.is_superuser:
+            return qs.filter(is_del=0)
+        return qs.filter(is_del=0, user=self.request.user)
 
 
 class PhotoAdmin(CommonAdmin):
-    list_display = ['name', 'desc', 'date', 'file', 'add_time']
+    list_display = ['name', 'desc', 'date', 'file', 'user', 'add_time']
     search_fields = ['name', 'desc', 'date']
     list_filter = ['name', 'desc', 'date']
 
     def queryset(self):
         qs = super(PhotoAdmin, self).queryset()
-        return qs.filter(is_del=0)
+        if self.request.user.is_superuser:
+            return qs.filter(is_del=0)
+        return qs.filter(is_del=0, user=self.request.user)
 
 
 class GalleryDetailAdmin(CommonAdmin):
-    list_display = ['gallery', 'photo', 'add_time']
+    list_display = ['gallery', 'photo', 'user', 'add_time']
     search_fields = ['gallery', 'photo']
     list_filter = ['gallery', 'photo']
 
     def queryset(self):
         qs = super(GalleryDetailAdmin, self).queryset()
-        return qs.filter(is_del=0)
+        if self.request.user.is_superuser:
+            return qs.filter(is_del=0)
+        return qs.filter(is_del=0, user=self.request.user)
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name == "photo":

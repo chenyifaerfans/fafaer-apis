@@ -14,7 +14,9 @@ class VideoCollectionAdmin(CommonAdmin):
 
     def queryset(self):
         qs = super(VideoCollectionAdmin, self).queryset()
-        return qs.filter(is_del=0)
+        if self.request.user.is_superuser:
+            return qs.filter(is_del=0)
+        return qs.filter(is_del=0, user=self.request.user)
 
 
 class VideoAdmin(CommonAdmin):
@@ -24,7 +26,9 @@ class VideoAdmin(CommonAdmin):
 
     def queryset(self):
         qs = super(VideoAdmin, self).queryset()
-        return qs.filter(is_del=0)
+        if self.request.user.is_superuser:
+            return qs.filter(is_del=0)
+        return qs.filter(is_del=0, user=self.request.user)
 
 
 class VideoCollectionDetailAdmin(CommonAdmin):
@@ -34,7 +38,9 @@ class VideoCollectionDetailAdmin(CommonAdmin):
 
     def queryset(self):
         qs = super(VideoCollectionDetailAdmin, self).queryset()
-        return qs.filter(is_del=0)
+        if self.request.user.is_superuser:
+            return qs.filter(is_del=0)
+        return qs.filter(is_del=0, user=self.request.user)
 
     # def formfield_for_dbfield(self, db_field, **kwargs):
     #     if db_field.name == "video":
