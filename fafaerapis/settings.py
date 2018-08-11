@@ -176,3 +176,10 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
+
+# 默认为10MB
+IMAGE_UPLOAD_MAX_SIZE = 10 * 1024 * 1024
+IMAGE_UPLOAD_TYPE = [
+    'jpg',
+    'png'
+]

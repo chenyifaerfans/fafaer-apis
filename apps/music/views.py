@@ -15,7 +15,7 @@ from .filters import SingerFilter, AlbumFilter, AudioFilter, SongFilter
 from .paginations import CommonPagination
 
 
-class SingerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class SingerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
     歌手
     list:
@@ -26,10 +26,21 @@ class SingerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.G
     """
     queryset = Singer.objects.filter(is_del=0)
     serializer_class = SingerSerializer
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_class = SingerFilter
     search_fields = ('nickname', 'desc')
     ordering_fields = ('add_time',)
+
+    def get_permissions(self):
+        if self.action == "create":
+            return [IsAuthenticated()]
+        return super(SingerViewset, self).get_permissions()
+
+    def get_queryset(self):
+        if self.action == "list":
+            return Singer.objects.filter(is_del=0)
+        return Singer.objects.filter(is_del=0, user=self.request.user)
 
 
 class AlbumViewset(viewsets.ModelViewSet):

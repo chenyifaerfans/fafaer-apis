@@ -5,6 +5,7 @@ __date__ = '2018/8/9 12:42'
 import xadmin
 
 from .models import Singer, Album, Audio, Song, AlbumDetail, AudioDetail
+from .forms import SingerAdminForm
 from common.base import CommonAdmin
 
 
@@ -22,6 +23,7 @@ class SingerAdmin(CommonAdmin):
     list_display = ['nickname', 'desc', 'avatar', 'background_img', 'birthday', 'gender', 'address']
     search_fields = ['nickname', 'desc', 'avatar', 'address']
     list_filter = ['nickname', 'desc', 'avatar', 'background_img']
+    form = SingerAdminForm
 
     def queryset(self):
         qs = super(SingerAdmin, self).queryset()
