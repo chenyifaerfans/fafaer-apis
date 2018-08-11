@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 from rest_framework import filters
 from rest_framework import mixins
 from rest_framework import viewsets
@@ -16,7 +14,7 @@ from .serializers import VideoCollectionSerializer, VideoSerializer, VideoCollec
     VideoCollectionListDetailSerializer, VideoCollectionDetail2Serializer
 
 
-class VideoCollectionViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+class VideoCollectionViewset(viewsets.ModelViewSet):
     """
     list:
     获取视频合集列表
@@ -27,10 +25,16 @@ class VideoCollectionViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, m
     create:
     创建视频合集
 
-    """
+    update:
+    更新视频合集
 
-    queryset = VideoCollection.objects.filter(is_del=0)
+    destroy：
+    删除视频合集
+
+    """
+    # queryset = VideoCollection.objects.filter(is_del=0)
     pagination_class = CommonPagination
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_class = VideoCollectionFilter
     search_fields = ('name', 'desc')
@@ -38,27 +42,38 @@ class VideoCollectionViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, m
 
     def get_permissions(self):
         if self.action == "create":
+            return [IsAuthenticated()]
+        if self.action == "update" or self.action == "destroy":
             return [IsAuthenticated(), IsOwnerOrReadOnly()]
-        return super(self).get_permissions()
-
-    def get_authenticators(self):
-        if self.action == "create":
-            return [JSONWebTokenAuthentication(), SessionAuthentication()]
-        return super(self).get_authenticators()
+        return super(VideoCollectionViewset, self).get_permissions()
 
     def get_serializer_class(self):
         if self.action == "retrieve":
             return VideoCollectionListDetailSerializer
         return VideoCollectionSerializer
 
+    def get_queryset(self):
+        if self.action == "list":
+            return VideoCollection.objects.filter(is_del=0)
+        return VideoCollection.objects.filter(is_del=0, user=self.request.user)
 
-class VideoViewset(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+
+class VideoViewset(viewsets.ModelViewSet):
     """
     list:
     查询视频列表
 
+    retrieve:
+    获取视频详情
+
     create:
     创建视频
+
+    update:
+    更新视频
+
+    destroy：
+    删除视频
 
     """
     pagination_class = CommonPagination
@@ -67,16 +82,25 @@ class VideoViewset(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.Gene
     serializer_class = VideoSerializer
 
     def get_queryset(self):
-        return Video.objects.filter(is_del=0)
+        return Video.objects.filter(is_del=0, user=self.request.user)
 
 
-class VideoCollectionDetailViewset(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+class VideoCollectionDetailViewset(viewsets.ModelViewSet):
     """
     list:
-    查询视频合集列表
+    查询视频合集明细列表
+
+    retrieve:
+    获取视频合集明细详情
 
     create:
     向视频合集中添加视频
+
+    update:
+    更新视频合集明细
+
+    destroy：
+    删除视频合集明细
 
     """
     pagination_class = CommonPagination
@@ -89,4 +113,4 @@ class VideoCollectionDetailViewset(mixins.ListModelMixin, mixins.CreateModelMixi
         return VideoCollectionDetailSerializer
 
     def get_queryset(self):
-        return VideoCollectionDetail.objects.filter(is_del=0)
+        return VideoCollectionDetail.objects.filter(is_del=0, user=self.request.user)

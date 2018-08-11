@@ -1,6 +1,7 @@
 # _*_ coding:utf-8 _*_
 __author__ = 'WANGY'
 __date__ = '2018/8/10 10:57'
+from datetime import datetime
 from django.utils.translation import ugettext as _, ungettext
 from rest_framework import serializers
 from xadmin.plugins.actions import BaseActionView
@@ -26,13 +27,22 @@ class DeleteSelected(BaseActionView):
 
 class CommonAdmin(object):
     actions = [DeleteSelected]
-    readonly_fields = ['add_time']
+    readonly_fields = ['add_time', 'update_time']
     # 详情页面不显示该字段，与readonly_fields冲突，不能同时设置字段
     exclude = ['is_del']
     # actions_on_top = True
 
+    def save_models(self):
+        if hasattr(self.new_obj, 'update_time'):
+            self.new_obj.update_time = datetime.now()
+        self.new_obj.save()
+
     def delete_model(self):
-        if hasattr(self.obj, 'is_del'):
+        if hasattr(self.obj, 'is_del') and hasattr(self.obj, 'update_time'):
+            self.obj.update_time = datetime.now()
+            self.obj.is_del = 1
+            self.obj.save()
+        elif hasattr(self.obj, 'is_del'):
             self.obj.is_del = 1
             self.obj.save()
         else:

@@ -8,7 +8,7 @@ from common.base import CommonAdmin
 
 
 class VideoCollectionAdmin(CommonAdmin):
-    list_display = ['name', 'desc', 'date', 'add_time']
+    list_display = ['name', 'desc', 'date', 'user', 'add_time']
     search_fields = ['name', 'desc', 'date']
     list_filter = ['name', 'desc', 'date']
 
@@ -18,7 +18,7 @@ class VideoCollectionAdmin(CommonAdmin):
 
 
 class VideoAdmin(CommonAdmin):
-    list_display = ['name', 'desc', 'date', 'file', 'add_time']
+    list_display = ['name', 'desc', 'date', 'user', 'file', 'add_time']
     search_fields = ['name', 'desc', 'date']
     list_filter = ['name', 'desc', 'date']
 
@@ -28,7 +28,7 @@ class VideoAdmin(CommonAdmin):
 
 
 class VideoCollectionDetailAdmin(CommonAdmin):
-    list_display = ['video_collection', 'video', 'add_time']
+    list_display = ['video_collection', 'video', 'user', 'add_time']
     search_fields = ['video_collection', 'video']
     list_filter = ['video_collection', 'video']
 

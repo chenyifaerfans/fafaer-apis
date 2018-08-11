@@ -17,10 +17,12 @@ from django.conf.urls import url, include
 
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
 
+from users.views import UserViewset
 from mp.views import BannerViewset, ProfileViewset, ProfileDetailViewset
 from music.views import SingerViewset, AlbumViewset, AudioViewset, SongViewset
 from photos.views import GalleryViewset, PhotoViewset, GalleryDetailViewset
@@ -29,6 +31,8 @@ from videos.views import VideoCollectionViewset, VideoViewset, VideoCollectionDe
 import xadmin
 
 router = DefaultRouter()
+router.register(r'users/user', UserViewset, base_name='user')
+
 router.register(r'mp/banner', BannerViewset, base_name='banner')
 router.register(r'mp/profile', ProfileViewset, base_name='profile')
 router.register(r'mp/detail', ProfileDetailViewset, base_name='mp_detail')
@@ -53,10 +57,13 @@ urlpatterns = [
     url(r'^docs/', include_docs_urls(title='文档')),
     url(r'^api-auth/', include('rest_framework.urls')),
 
-    # JWT
-    url(r'^jwt-auth/', obtain_jwt_token),
-    url(r'^jwt-token-refresh/', refresh_jwt_token),
-    url(r'^jwt-token-verify/', verify_jwt_token),
+    # drf自带的token认证模式
+    url(r'^drf-auth/', obtain_auth_token),
+
+    # JWT token认证模式
+    url(r'^jwt/auth/', obtain_jwt_token),
+    url(r'^jwt/refresh/', refresh_jwt_token),
+    url(r'^jwt/verify/', verify_jwt_token),
 
     url(r'^', include(router.urls))
 ]
