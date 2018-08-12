@@ -18,6 +18,7 @@ from .paginations import CommonPagination
 class SingerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
     歌手
+
     list:
     获取歌手列表
 
@@ -46,6 +47,7 @@ class SingerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.Cre
 class AlbumViewset(viewsets.ModelViewSet):
     """
     专辑
+
     list:
     获取专辑列表
 
@@ -92,6 +94,7 @@ class AlbumViewset(viewsets.ModelViewSet):
 class AudioViewset(viewsets.ModelViewSet):
     """
     电台
+
     list:
     获取电台列表
 
@@ -138,6 +141,7 @@ class AudioViewset(viewsets.ModelViewSet):
 class SongViewset(viewsets.ModelViewSet):
     """
     歌曲
+
     list:
     获取电台列表
 
@@ -170,6 +174,7 @@ class SongViewset(viewsets.ModelViewSet):
 class AlbumDetailViewset(viewsets.ModelViewSet):
     """
     专辑详情
+
     list:
     获取专辑详情列表
 
@@ -202,6 +207,7 @@ class AlbumDetailViewset(viewsets.ModelViewSet):
 class AudioDetailViewset(viewsets.ModelViewSet):
     """
     电台详情
+
     list:
     获取电台详情列表
 

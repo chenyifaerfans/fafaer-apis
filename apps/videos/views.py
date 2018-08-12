@@ -15,6 +15,8 @@ from .serializers import VideoCollectionSerializer, VideoSerializer, VideoCollec
 
 class VideoCollectionViewset(viewsets.ModelViewSet):
     """
+    视频合集
+
     list:
     获取视频合集列表
 
@@ -58,6 +60,8 @@ class VideoCollectionViewset(viewsets.ModelViewSet):
 
 class VideoViewset(viewsets.ModelViewSet):
     """
+    视频
+
     list:
     查询视频列表
 
@@ -85,6 +89,8 @@ class VideoViewset(viewsets.ModelViewSet):
 
 class VideoCollectionDetailViewset(viewsets.ModelViewSet):
     """
+    视频合集明细
+
     list:
     查询视频合集明细列表
 

@@ -12,6 +12,8 @@ from .serializers import BannerSerializer, ProfileSerializer, ProfileDetailSeria
 
 class BannerViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
     """
+    轮播图
+
     list:
         轮播图列表
     """
@@ -23,6 +25,8 @@ class BannerViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 class ProfileViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
+    个人资料
+
     list:
         列表
     """
@@ -32,6 +36,8 @@ class ProfileViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.
 
 class ProfileDetailViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
     """
+    个人资料详情
+
     list:
         列表
     """

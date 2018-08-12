@@ -18,6 +18,8 @@ from .serializers import GallerySerializer, PhotoSerializer, GalleryListDetailSe
 
 class GalleryViewset(viewsets.ModelViewSet):
     """
+    相册
+
     list:
     查询所有相册
 
@@ -53,8 +55,10 @@ class GalleryViewset(viewsets.ModelViewSet):
 
 class PhotoViewset(viewsets.ModelViewSet):
     """
+    照片
+
     list:
-    查询所有相册
+    查询所有照片
 
     retrieve:
     查看某一照片明细
@@ -83,6 +87,8 @@ class PhotoViewset(viewsets.ModelViewSet):
 
 class GalleryDetailViewset(viewsets.ModelViewSet):
     """
+    相册明细
+
     list:
     查询所有相册详情
 
