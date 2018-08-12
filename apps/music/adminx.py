@@ -5,7 +5,7 @@ __date__ = '2018/8/9 12:42'
 import xadmin
 
 from .models import Singer, Album, Audio, Song, AlbumDetail, AudioDetail
-from .forms import SingerAdminForm
+from .forms import SingerAdminForm, AlbumAdminForm, SongAdminForm
 from common.base import CommonAdmin
 
 
@@ -32,10 +32,11 @@ class SingerAdmin(CommonAdmin):
 
 
 class AlbumAdmin(CommonAdmin):
-    list_display = ['name', 'desc', 'singer', 'cover_img', 'bg_img', 'get_album_songs_count', 'release_date', 'release_company', 'user']
+    list_display = ['name', 'desc', 'singer', 'cover_img', 'background_img', 'get_album_songs_count', 'release_date', 'release_company', 'user']
     search_fields = ['name', 'desc', 'singer', 'release_date', 'release_company',]
     list_filter = ['name', 'singer', 'release_date']
     inlines = [AlbumDetailInline]
+    form = AlbumAdminForm
 
     def queryset(self):
         qs = super(AlbumAdmin, self).queryset()
@@ -61,6 +62,7 @@ class SongAdmin(CommonAdmin):
     list_display = ['name', 'desc', 'singer', 'duration', 'hits', 'user', 'file']
     search_fields = ['name', 'desc', 'singer']
     list_filter = ['name', 'desc', 'singer']
+    form = SongAdminForm
 
     def queryset(self):
         qs = super(SongAdmin, self).queryset()

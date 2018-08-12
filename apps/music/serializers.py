@@ -6,28 +6,19 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from fafaerapis.settings import IMAGE_UPLOAD_MAX_SIZE, IMAGE_UPLOAD_TYPE
+from fafaerapis.settings import IMAGE_UPLOAD_MAX_SIZE, IMAGE_UPLOAD_TYPE, MUSIC_UPLOAD_MAX_SIZE, MUSIC_UPLOAD_TYPE
 from .models import Singer, Album, Audio, Song, AlbumDetail, AudioDetail
 from common.base import CommonSerializer
+from common.validations import validate_fields
 
 
 class SingerSerializer(CommonSerializer):
 
     def validate_avatar(self, avatar):
-        names = getattr(avatar, 'name').split(".")
-        if len(names) == 2:
-            image_type = names[1]
-            if not IMAGE_UPLOAD_TYPE or image_type.lower() in IMAGE_UPLOAD_TYPE:
-                if not IMAGE_UPLOAD_MAX_SIZE or getattr(avatar, 'size') <= IMAGE_UPLOAD_MAX_SIZE:
-                    return avatar
-                else:
-                    raise serializers.ValidationError(_("图像大小不能大于%sMB" % str(IMAGE_UPLOAD_MAX_SIZE / 1024 / 1024)),
-                                                      code="avatar_invalid")
-            else:
-                raise serializers.ValidationError(_("图像必须为'%s'格式" % ','.join(IMAGE_UPLOAD_TYPE)),
-                                                  code="avatar_invalid")
-        else:
-            raise serializers.ValidationError("图像文件名错误", code="avatar_invalid")
+        return validate_fields(avatar, upload_max_size=IMAGE_UPLOAD_MAX_SIZE, upload_types=IMAGE_UPLOAD_TYPE)
+
+    def validate_background_img(self, background_img):
+        return validate_fields(background_img, upload_max_size=IMAGE_UPLOAD_MAX_SIZE, upload_types=IMAGE_UPLOAD_TYPE)
 
     class Meta:
         model = Singer
@@ -58,7 +49,7 @@ class Album2Serializer(CommonSerializer):
         "required": "请输入专辑封面",
         "max_length": "专辑封面长度不能超过100"
     }, label='专辑封面', help_text='专辑封面')
-    bg_img = serializers.ImageField(required=True, error_messages={
+    background_img = serializers.ImageField(required=True, error_messages={
         "blank": "专辑背景图片不能为空",
         "required": "专辑背景图片不能为空",
         "max_length": "专辑背景图片长度不能超过100"
@@ -78,10 +69,10 @@ class Album2Serializer(CommonSerializer):
     )
 
     def validate_cover_img(self, cover_img):
-        pass
+        return validate_fields(cover_img, upload_max_size=IMAGE_UPLOAD_MAX_SIZE, upload_types=IMAGE_UPLOAD_TYPE)
 
-    def validate_bg_img(self, bg_img):
-        pass
+    def validate_background_img(self, background_img):
+        return validate_fields(background_img, upload_max_size=IMAGE_UPLOAD_MAX_SIZE, upload_types=IMAGE_UPLOAD_TYPE)
 
     class Meta:
         model = Album
@@ -113,6 +104,19 @@ class SongSerializer(CommonSerializer):
     user = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
     )
+
+    class Meta:
+        model = Song
+        exclude = ('is_del', 'add_time', 'update_time')
+
+
+class Song2Serializer(CommonSerializer):
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+
+    def validate_file(self, file):
+        return validate_fields(file, upload_max_size=MUSIC_UPLOAD_MAX_SIZE, upload_types=MUSIC_UPLOAD_TYPE)
 
     class Meta:
         model = Song

@@ -34,7 +34,7 @@ class Album(models.Model):
     desc = models.CharField(max_length=100, verbose_name=u"描述")
     singer = models.ForeignKey(Singer, verbose_name='歌手')
     cover_img = models.ImageField(upload_to="album/cover/%Y/%m", max_length=100, verbose_name='专辑页面')
-    bg_img = models.ImageField(upload_to="singer/background/%Y/%m", max_length=100, verbose_name='专辑背景图片')
+    background_img = models.ImageField(upload_to="singer/background/%Y/%m", max_length=100, verbose_name='专辑背景图片')
     release_date = models.DateField(default=datetime.now, verbose_name='发行时间')
     release_company = models.CharField(default='', max_length=30, verbose_name='发行公司')
     user = models.ForeignKey(User, verbose_name=u"创建用户")

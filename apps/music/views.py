@@ -10,7 +10,7 @@ from common.permissions import IsOwnerOrReadOnly
 from .models import Singer, Album, Audio, Song, AlbumDetail, AudioDetail
 from .serializers import SingerSerializer, AlbumSerializer, AudioSerializer, SongSerializer, AlbumListDetailSerializer, \
     AudioListDetailSerializer, AlbumDetailSerializer, AlbumDetail2Serializer, AudioDetailSerializer, \
-    AudioDetail2Serializer, Album2Serializer, Audio2Serializer
+    AudioDetail2Serializer, Album2Serializer, Audio2Serializer, Song2Serializer
 from .filters import SingerFilter, AlbumFilter, AudioFilter, SongFilter
 from .paginations import CommonPagination
 
@@ -158,7 +158,6 @@ class SongViewset(viewsets.ModelViewSet):
     删除歌曲
 
     """
-    serializer_class = SongSerializer
     pagination_class = CommonPagination
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
@@ -166,6 +165,11 @@ class SongViewset(viewsets.ModelViewSet):
     filter_class = SongFilter
     search_fields = ('name', 'desc')
     ordering_fields = ('add_time',)
+
+    def get_serializer_class(self):
+        if self.action == "create" or self.action == "update":
+            return Song2Serializer
+        return SongSerializer
 
     def get_queryset(self):
         return Song.objects.filter(is_del=0, user=self.request.user)
