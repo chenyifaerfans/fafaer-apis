@@ -5,6 +5,7 @@ __date__ = '2018/8/9 12:42'
 import xadmin
 
 from .models import Gallery, Photo, GalleryDetail
+from .forms import PhotoAdminForm
 from common.base import CommonAdmin
 
 
@@ -25,6 +26,7 @@ class PhotoAdmin(CommonAdmin):
     list_display = ['name', 'desc', 'date', 'file', 'user', 'add_time']
     search_fields = ['name', 'desc', 'date']
     list_filter = ['name', 'desc', 'date']
+    form = PhotoAdminForm
 
     def queryset(self):
         qs = super(PhotoAdmin, self).queryset()

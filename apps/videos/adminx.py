@@ -4,6 +4,7 @@ __date__ = '2018/8/9 12:42'
 import xadmin
 
 from .models import VideoCollection, Video, VideoCollectionDetail
+from .forms import VideoAdminForm
 from common.base import CommonAdmin
 
 
@@ -25,6 +26,7 @@ class VideoAdmin(CommonAdmin):
     list_display = ['name', 'desc', 'date', 'user', 'file', 'add_time']
     search_fields = ['name', 'desc', 'date']
     list_filter = ['name', 'desc', 'date']
+    form = VideoAdminForm
 
     def queryset(self):
         qs = super(VideoAdmin, self).queryset()

@@ -20,14 +20,17 @@ class SingerAdminForm(forms.ModelForm):
 
 class AlbumAdminForm(forms.ModelForm):
 
-    def clean_cover_img(self, cover_img):
+    def clean_cover_img(self):
+        cover_img = self.cleaned_data['cover_img']
         return clean_fields(cover_img, upload_max_size=IMAGE_UPLOAD_MAX_SIZE, upload_types=IMAGE_UPLOAD_TYPE)
 
-    def clean_background_img(self, background_img):
+    def clean_background_img(self):
+        background_img = self.cleaned_data['background_img']
         return clean_fields(background_img, upload_max_size=IMAGE_UPLOAD_MAX_SIZE, upload_types=IMAGE_UPLOAD_TYPE)
 
 
 class SongAdminForm(forms.ModelForm):
 
-    def clean_file(self, file):
+    def clean_file(self):
+        file = self.cleaned_data['file']
         return clean_fields(file, upload_max_size=MUSIC_UPLOAD_MAX_SIZE, upload_types=MUSIC_UPLOAD_TYPE)

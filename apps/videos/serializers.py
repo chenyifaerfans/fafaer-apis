@@ -4,7 +4,9 @@ __date__ = '2018/8/9 12:43'
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
+from fafaerapis.settings import VIDEO_UPLOAD_MAX_SIZE, VIDEO_UPLOAD_TYPE
 from common.base import CommonSerializer
+from common.validations import validate_fields
 from .models import VideoCollection, Video, VideoCollectionDetail
 
 
@@ -22,6 +24,9 @@ class VideoSerializer(CommonSerializer):
     user = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
     )
+
+    def validate_file(self, file):
+        return validate_fields(file, upload_max_size=VIDEO_UPLOAD_MAX_SIZE, upload_types=VIDEO_UPLOAD_TYPE)
 
     class Meta:
         model = Video

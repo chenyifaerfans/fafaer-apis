@@ -4,8 +4,10 @@ __date__ = '2018/8/9 12:43'
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
+from fafaerapis.settings import IMAGE_UPLOAD_MAX_SIZE, IMAGE_UPLOAD_TYPE
 from .models import Gallery, Photo, GalleryDetail
 from common.base import CommonSerializer
+from common.validations import validate_fields
 
 
 class GallerySerializer(CommonSerializer):
@@ -22,6 +24,9 @@ class PhotoSerializer(CommonSerializer):
     user = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
     )
+
+    def validate_file(self, file):
+        return validate_fields(file, upload_max_size=IMAGE_UPLOAD_MAX_SIZE, upload_types=IMAGE_UPLOAD_TYPE)
 
     class Meta:
         model = Photo

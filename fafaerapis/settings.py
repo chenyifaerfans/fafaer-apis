@@ -177,16 +177,26 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
 
-# 图片默认为10MB
+# 图片文件上传设置
+# 默认为10MB
 IMAGE_UPLOAD_MAX_SIZE = 10 * 1024 * 1024
 IMAGE_UPLOAD_TYPE = [
     'jpg',
     'png'
 ]
 
-# 图片默认为10MB
+# 音乐文件上传设置
+# 默认为15MB
 MUSIC_UPLOAD_MAX_SIZE = 15 * 1024 * 1024
 MUSIC_UPLOAD_TYPE = [
-    'MP3',
+    'mp3',
+    # 'png'
+]
+
+# 音乐文件上传设置
+# 默认为150MB
+VIDEO_UPLOAD_MAX_SIZE = 150 * 1024 * 1024
+VIDEO_UPLOAD_TYPE = [
+    'mp4',
     # 'png'
 ]
