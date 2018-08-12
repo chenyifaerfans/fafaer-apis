@@ -67,5 +67,5 @@ urlpatterns = [
     url(r'^jwt/refresh/', refresh_jwt_token),
     url(r'^jwt/verify/', verify_jwt_token),
 
-    url(r'^', include(router.urls))
+    url(r'^v1/', include(router.urls, namespace='v1'))
 ]

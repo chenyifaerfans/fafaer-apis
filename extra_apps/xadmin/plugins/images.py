@@ -52,6 +52,11 @@ class AdminImageWidget(forms.FileInput):
         return mark_safe(u''.join(output))
 
     def use_required_attribute(self, initial):
+        """
+        修复图片文件已上传，编辑时要求重新上传的bug
+        :param initial:
+        :return:
+        """
         return super(AdminImageWidget, self).use_required_attribute(initial) and not initial
 
 
