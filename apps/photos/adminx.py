@@ -9,9 +9,10 @@ from common.base import CommonAdmin
 
 
 class GalleryAdmin(CommonAdmin):
-    list_display = ['name', 'desc', 'date', 'user', 'add_time']
+    list_display = ['name', 'desc', 'date', 'get_photos_count', 'user', 'add_time']
     search_fields = ['name', 'desc', 'date']
     list_filter = ['name', 'desc', 'date']
+    model_icon = 'fa fa-picture-o'
 
     def queryset(self):
         qs = super(GalleryAdmin, self).queryset()

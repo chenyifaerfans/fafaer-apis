@@ -47,6 +47,11 @@ class Album(models.Model):
         verbose_name = "专辑"
         verbose_name_plural = verbose_name
 
+    def get_album_songs_count(self):
+        return self.songs.filter(is_del=0).count()
+
+    get_album_songs_count.short_description = '歌曲数量'
+
     def __str__(self):
         return self.name
 
@@ -64,6 +69,11 @@ class Audio(models.Model):
     class Meta:
         verbose_name = "电台"
         verbose_name_plural = verbose_name
+
+    def get_audio_songs_count(self):
+        return self.songs.filter(is_del=0).count()
+
+    get_audio_songs_count.short_description = '电台歌曲数量'
 
     def __str__(self):
         return self.name

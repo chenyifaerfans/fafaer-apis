@@ -8,9 +8,11 @@ from common.base import CommonAdmin
 
 
 class VideoCollectionAdmin(CommonAdmin):
-    list_display = ['name', 'desc', 'date', 'user', 'add_time']
+    list_display = ['name', 'desc', 'date', 'get_videos_count', 'user', 'add_time']
     search_fields = ['name', 'desc', 'date']
     list_filter = ['name', 'desc', 'date']
+    # list_display_links = ['get_videos_count']
+    model_icon = 'fa fa-video-camera'
 
     def queryset(self):
         qs = super(VideoCollectionAdmin, self).queryset()

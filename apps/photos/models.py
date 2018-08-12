@@ -22,6 +22,11 @@ class Gallery(models.Model):
         verbose_name = '相册'
         verbose_name_plural = verbose_name
 
+    def get_photos_count(self):
+        return self.photos.filter(is_del=0).count()
+
+    get_photos_count.short_description = '照片数量'
+
     def __str__(self):
         return self.name
 

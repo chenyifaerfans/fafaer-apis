@@ -24,6 +24,7 @@ class SingerAdmin(CommonAdmin):
     search_fields = ['nickname', 'desc', 'avatar', 'address']
     list_filter = ['nickname', 'desc', 'avatar', 'background_img']
     form = SingerAdminForm
+    model_icon = 'fa fa-music'
 
     def queryset(self):
         qs = super(SingerAdmin, self).queryset()
@@ -31,7 +32,7 @@ class SingerAdmin(CommonAdmin):
 
 
 class AlbumAdmin(CommonAdmin):
-    list_display = ['name', 'desc', 'singer', 'cover_img', 'bg_img', 'release_date', 'release_company', 'user']
+    list_display = ['name', 'desc', 'singer', 'cover_img', 'bg_img', 'get_album_songs_count', 'release_date', 'release_company', 'user']
     search_fields = ['name', 'desc', 'singer', 'release_date', 'release_company',]
     list_filter = ['name', 'singer', 'release_date']
     inlines = [AlbumDetailInline]
@@ -44,7 +45,7 @@ class AlbumAdmin(CommonAdmin):
 
 
 class AudioAdmin(CommonAdmin):
-    list_display = ['name', 'desc', 'singer', 'user']
+    list_display = ['name', 'desc', 'singer', 'get_audio_songs_count', 'user']
     search_fields = ['name', 'desc', 'singer']
     list_filter = ['name', 'desc', 'singer']
     inlines = [AudioDetailInline]
@@ -57,7 +58,7 @@ class AudioAdmin(CommonAdmin):
 
 
 class SongAdmin(CommonAdmin):
-    list_display = ['name', 'desc', 'singer', 'album', 'audio', 'duration', 'hits', 'user', 'file']
+    list_display = ['name', 'desc', 'singer', 'duration', 'hits', 'user', 'file']
     search_fields = ['name', 'desc', 'singer']
     list_filter = ['name', 'desc', 'singer']
 

@@ -21,6 +21,11 @@ class VideoCollection(models.Model):
         verbose_name = '视频合集'
         verbose_name_plural = verbose_name
 
+    def get_videos_count(self):
+        return self.videos.filter(is_del=0).count()
+
+    get_videos_count.short_description = '视频数量'
+
     def __str__(self):
         return self.name
 
