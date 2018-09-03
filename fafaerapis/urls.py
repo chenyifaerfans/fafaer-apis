@@ -22,6 +22,12 @@ from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
 
+from django.views.static import serve
+
+from fafaerapis.settings import MEDIA_ROOT
+from fafaerapis.settings import STATIC_ROOT
+from fafaerapis.settings import DEBUG
+
 from users.views import UserViewset
 from mp.views import BannerViewset, ProfileViewset, ProfileDetailViewset
 from music.views import SingerViewset, AlbumViewset, AudioViewset, SongViewset, AlbumDetailViewset, AudioDetailViewset
@@ -56,6 +62,9 @@ urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
 
     #
+    url(r'^ueditor/', include('DjangoUeditor.urls')),
+
+    #
     url(r'^docs/', include_docs_urls(title='文档')),
     url(r'^api-auth/', include('rest_framework.urls')),
 
@@ -67,5 +76,15 @@ urlpatterns = [
     url(r'^jwt/refresh/', refresh_jwt_token),
     url(r'^jwt/verify/', verify_jwt_token),
 
-    url(r'^v1/', include(router.urls, namespace='v1'))
+    url(r'^v1/', include(router.urls, namespace='v1')),
+
+    # 配置上传文件的处理
+    url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+
 ]
+
+if not DEBUG:
+    urlpatterns += [
+        # settings中DEBUG为False时，必须设置
+        url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT})
+    ]

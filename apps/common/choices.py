@@ -26,3 +26,8 @@ CONTENT_CHOICES = (
     ("profile", u"个人资料"),
     ("contact", u"联系方式")
 )
+
+IS_TOP_CHOICES = (
+    (0, u"未置顶"),
+    (1, u"已置顶")
+)

@@ -29,7 +29,7 @@ SECRET_KEY = '6h2c+3=s7s!j@@1)dnx(wttq@qn4i$d1b(nxyw)6yb6@3=-!^j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -42,16 +42,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_filters',
+    'DjangoUeditor',
     'xadmin',
     'crispy_forms',
-    'django_oss_storage',
+    # 'django_oss_storage',
     'rest_framework',
     'rest_framework.authtoken',
     'users.apps.UsersConfig',
     'mp.apps.MpConfig',
     'music.apps.MusicConfig',
     'videos.apps.VideosConfig',
-    'photos.apps.PhotosConfig'
+    'photos.apps.PhotosConfig',
+    'news.apps.NewsConfig',
+
 ]
 
 AUTH_USER_MODEL = "users.User"
@@ -85,6 +88,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -96,17 +100,31 @@ WSGI_APPLICATION = 'fafaerapis.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'fafaerapis',
-        'USER': 'root',
-        'PASSWORD': 'Pa55Word',
-        'HOST': '127.0.0.1',
-        # 'OPTIONS': {'init_command': 'SET storage_engine=INNODB;'}
-        'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'}
+if 'RDS_HOSTNAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+            'CHARSET': 'utf8mb4',
+            'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'}
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'fafaerapis',
+            'USER': 'root',
+            'PASSWORD': 'Pa55Word',
+            'HOST': '127.0.0.1',
+            # 'OPTIONS': {'init_command': 'SET storage_engine=INNODB;'}
+            'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'}
+        }
+    }
 
 
 # Password validation
@@ -146,19 +164,23 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATICFILES_STORAGE = 'django_oss_storage.backends.OssStaticStorage'
-DEFAULT_FILE_STORAGE = 'django_oss_storage.backends.OssMediaStorage'
-
-OSS_ACCESS_KEY_ID = 'LTAIzh4ZeURSvNKz'
-OSS_ACCESS_KEY_SECRET = 'Gqk7nfN7JoYPMZDGa9UwDK27wANLQv'
-OSS_BUCKET_NAME = 'fafaer'
-OSS_ENDPOINT = 'cdn.chenyifaer.com'
+# STATICFILES_STORAGE = 'django_oss_storage.backends.OssStaticStorage'
+# DEFAULT_FILE_STORAGE = 'django_oss_storage.backends.OssMediaStorage'
+#
+# OSS_ACCESS_KEY_ID = 'LTAIzh4ZeURSvNKz'
+# OSS_ACCESS_KEY_SECRET = 'Gqk7nfN7JoYPMZDGa9UwDK27wANLQv'
+# OSS_BUCKET_NAME = 'fafaer'
+# OSS_ENDPOINT = 'cdn.chenyifaer.com'
 
 
 REST_FRAMEWORK = {
