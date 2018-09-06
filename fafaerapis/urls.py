@@ -25,7 +25,6 @@ from rest_framework_jwt.views import verify_jwt_token
 from django.views.static import serve
 
 from fafaerapis.settings import MEDIA_ROOT
-from fafaerapis.settings import STATIC_ROOT
 from fafaerapis.settings import DEBUG
 
 from users.views import UserViewset
@@ -84,7 +83,8 @@ urlpatterns = [
 ]
 
 if not DEBUG:
+    from fafaerapis.settings import STATIC_ROOT
     urlpatterns += [
         # settings中DEBUG为False时，必须设置
-        url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT})
+        url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
     ]
