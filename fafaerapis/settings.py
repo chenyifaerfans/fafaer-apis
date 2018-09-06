@@ -27,7 +27,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, "extra_apps"))
 SECRET_KEY = '6h2c+3=s7s!j@@1)dnx(wttq@qn4i$d1b(nxyw)6yb6@3=-!^j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'DjangoUeditor',
     'xadmin',
     'crispy_forms',
-    # 'django_oss_storage',
+    'django_oss_storage',
     'rest_framework',
     'rest_framework.authtoken',
     'users.apps.UsersConfig',
@@ -176,12 +176,12 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # STATICFILES_STORAGE = 'django_oss_storage.backends.OssStaticStorage'
-# DEFAULT_FILE_STORAGE = 'django_oss_storage.backends.OssMediaStorage'
+DEFAULT_FILE_STORAGE = 'django_oss_storage.backends.OssMediaStorage'
 #
-# OSS_ACCESS_KEY_ID = 'LTAIzh4ZeURSvNKz'
-# OSS_ACCESS_KEY_SECRET = 'Gqk7nfN7JoYPMZDGa9UwDK27wANLQv'
-# OSS_BUCKET_NAME = 'fafaer'
-# OSS_ENDPOINT = 'cdn.chenyifaer.com'
+OSS_ACCESS_KEY_ID = 'LTAIzh4ZeURSvNKz'
+OSS_ACCESS_KEY_SECRET = 'Gqk7nfN7JoYPMZDGa9UwDK27wANLQv'
+OSS_BUCKET_NAME = 'fafaer'
+OSS_ENDPOINT = 'cdn.chenyifaer.com'
 
 
 REST_FRAMEWORK = {

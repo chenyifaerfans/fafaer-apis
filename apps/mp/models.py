@@ -13,6 +13,7 @@ class Banner(models.Model):
     image = models.ImageField(upload_to="banner/%Y/%m", max_length=100, verbose_name=u"封面")
     order = models.IntegerField(default=10, verbose_name=u"排序", help_text="排序字段")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
+    update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")
     is_del = models.IntegerField(choices=IS_DEL_CHOICES, default=0, verbose_name=u"是否删除")
 
     class Meta:
@@ -29,6 +30,7 @@ class Profile(models.Model):
     avatar = models.ImageField(upload_to="avatar/%Y/%m", max_length=100, default=u"avatar/default.png",
                                verbose_name=u"头像")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
+    update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")
     is_del = models.IntegerField(choices=IS_DEL_CHOICES, default=0, verbose_name=u"是否删除")
 
     class Meta:
@@ -46,6 +48,7 @@ class ProfileDetail(models.Model):
     image = models.ImageField(upload_to="content/%Y/%m", max_length=100, verbose_name=u"封面")
     order = models.IntegerField(default=10, verbose_name=u"排序")
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
+    update_time = models.DateTimeField(default=datetime.now, verbose_name=u"更新时间")
     is_del = models.IntegerField(choices=IS_DEL_CHOICES, default=0, verbose_name=u"是否删除")
 
     class Meta:
