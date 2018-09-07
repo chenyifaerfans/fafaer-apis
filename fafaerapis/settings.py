@@ -19,7 +19,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
 sys.path.insert(0, os.path.join(BASE_DIR, "extra_apps"))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -30,7 +29,6 @@ SECRET_KEY = '6h2c+3=s7s!j@@1)dnx(wttq@qn4i$d1b(nxyw)6yb6@3=-!^j'
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -96,21 +94,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'fafaerapis.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-if 'RDS_HOSTNAME' in os.environ:
+if 'DATABASE' in os.environ:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'],
-            'PASSWORD': os.environ['RDS_PASSWORD'],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
-            'CHARSET': 'utf8mb4',
-            'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'}
+            'ENGINE': os.getenv('ENGINE', 'django.db.backends.mysql'),
+            'NAME': os.getenv('DATABASE', 'fafaerapis'),
+            'USER': os.getenv('USER', 'root'),
+            'PASSWORD': os.getenv('PASSWORD', 'Pa55Word'),
+            'HOST': os.getenv('HOST', '127.0.0.1')
         }
     }
 else:
@@ -125,7 +119,6 @@ else:
             'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'}
         }
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -145,7 +138,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -159,15 +151,14 @@ USE_L10N = True
 
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
 
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -182,7 +173,6 @@ OSS_ACCESS_KEY_ID = 'LTAIzh4ZeURSvNKz'
 OSS_ACCESS_KEY_SECRET = 'Gqk7nfN7JoYPMZDGa9UwDK27wANLQv'
 OSS_BUCKET_NAME = 'fafaer'
 OSS_ENDPOINT = 'cdn.chenyifaer.com'
-
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -201,7 +191,6 @@ REST_FRAMEWORK = {
         'user': '1000/day'
     }
 }
-
 
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),

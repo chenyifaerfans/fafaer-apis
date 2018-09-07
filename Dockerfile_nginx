@@ -1,0 +1,15 @@
+FROM nginx:1.14
+
+LABEL maintainer="YING WANG<864891814@qq.com>"
+
+COPY ./docker.file/nginx/nginx.conf /etc/nginx/
+COPY ./docker.file/nginx/default.conf /etc/nginx/conf.d/
+
+WORKDIR /fafaerapis
+
+COPY ./static /fafaerapis/static
+# COPY ./media /fafaerapis/media
+
+EXPOSE 9000
+
+CMD nginx -g "daemon off;"

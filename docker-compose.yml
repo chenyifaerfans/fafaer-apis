@@ -1,0 +1,77 @@
+version: '3'
+services:
+  db:
+    image: registry.cn-qingdao.aliyuncs.com/upcwangying/fafaerapis-mysql:1.0.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: fafaerapis
+      MYSQL_ROOT_PASSWORD: Pa55Word
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  lb:
+    image: registry.cn-qingdao.aliyuncs.com/upcwangying/fafaerapis-nginx:1.0.0
+    restart: always
+    ports:
+      - "9000:9000"
+    links:
+      - web
+    depends_on:
+      - web
+
+  web:
+    image: registry.cn-qingdao.aliyuncs.com/upcwangying/fafaerapis-web:1.0.0
+    restart: always
+    environment:
+      DATABASE: fafaerapis
+      USER: root
+      PASSWORD: Pa55Word
+      HOST: db
+#    ports:
+#      - "8001"
+    links:
+      - db
+    depends_on:
+      - db
+
+volumes:
+  mysql-data:
+
+#
+#fafaerapis-db:
+#    image: 'registry.cn-qingdao.aliyuncs.com/upcwangying/fafaerapis-mysql:1.0.0'
+#    environment:
+#      MYSQL_DATABASE: fafaerapis
+#      MYSQL_ROOT_PASSWORD: Pa55Word
+#    volumes:
+#        - /mysql-data:/var/lib/mysql
+#    restart: always
+#    labels:
+#        aliyun.scale: '1'
+#
+#fafaerapis-web:
+#    image: 'registry.cn-qingdao.aliyuncs.com/upcwangying/fafaerapis-web:1.0.0'
+#    environment:
+#      DATABASE: fafaerapis
+#      USER: root
+#      PASSWORD: Pa55Word
+#      HOST: db
+#    restart: always
+#    links:
+#    - 'fafaerapis-db:db'
+#    depends_on:
+#    - 'fafaerapis-db'
+#    labels:
+#        aliyun.scale: '2'
+#
+#fafaerapis-nginx:
+#    image: 'registry.cn-qingdao.aliyuncs.com/upcwangying/fafaerapis-nginx:1.0.0'
+#    ports:
+#    - "9000:9000"
+#    links:
+#    - 'fafaerapis-web:web'
+#    depends_on:
+#    - 'fafaerapis-web'
+#    restart: always
+#    labels:
+#        aliyun.scale: '1'
