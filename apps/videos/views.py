@@ -54,8 +54,8 @@ class VideoCollectionViewset(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.action == "list":
-            return VideoCollection.objects.filter(is_del=0)
-        return VideoCollection.objects.filter(is_del=0, user=self.request.user)
+            return VideoCollection.objects.filter(is_del=0).order_by("add_time")
+        return VideoCollection.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class VideoViewset(viewsets.ModelViewSet):
@@ -84,7 +84,7 @@ class VideoViewset(viewsets.ModelViewSet):
     serializer_class = VideoSerializer
 
     def get_queryset(self):
-        return Video.objects.filter(is_del=0, user=self.request.user)
+        return Video.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class VideoCollectionDetailViewset(viewsets.ModelViewSet):
@@ -117,4 +117,4 @@ class VideoCollectionDetailViewset(viewsets.ModelViewSet):
         return VideoCollectionDetailSerializer
 
     def get_queryset(self):
-        return VideoCollectionDetail.objects.filter(is_del=0, user=self.request.user)
+        return VideoCollectionDetail.objects.filter(is_del=0, user=self.request.user).order_by("add_time")

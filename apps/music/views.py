@@ -25,7 +25,6 @@ class SingerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.Cre
     retrieve:
     获取歌手明细
     """
-    queryset = Singer.objects.filter(is_del=0)
     serializer_class = SingerSerializer
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
@@ -40,8 +39,8 @@ class SingerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.Cre
 
     def get_queryset(self):
         if self.action == "list":
-            return Singer.objects.filter(is_del=0)
-        return Singer.objects.filter(is_del=0, user=self.request.user)
+            return Singer.objects.filter(is_del=0).order_by("add_time")
+        return Singer.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class AlbumViewset(viewsets.ModelViewSet):
@@ -87,8 +86,8 @@ class AlbumViewset(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.action == "list":
-            return Album.objects.filter(is_del=0)
-        return Album.objects.filter(is_del=0, user=self.request.user)
+            return Album.objects.filter(is_del=0).order_by("add_time")
+        return Album.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class AudioViewset(viewsets.ModelViewSet):
@@ -134,8 +133,8 @@ class AudioViewset(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.action == "list":
-            return Audio.objects.filter(is_del=0)
-        return Audio.objects.filter(is_del=0, user=self.request.user)
+            return Audio.objects.filter(is_del=0).order_by("add_time")
+        return Audio.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class SongViewset(viewsets.ModelViewSet):
@@ -172,7 +171,7 @@ class SongViewset(viewsets.ModelViewSet):
         return SongSerializer
 
     def get_queryset(self):
-        return Song.objects.filter(is_del=0, user=self.request.user)
+        return Song.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class AlbumDetailViewset(viewsets.ModelViewSet):
@@ -205,7 +204,7 @@ class AlbumDetailViewset(viewsets.ModelViewSet):
         return AlbumDetailSerializer
 
     def get_queryset(self):
-        return AlbumDetail.objects.filter(is_del=0, user=self.request.user)
+        return AlbumDetail.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class AudioDetailViewset(viewsets.ModelViewSet):
@@ -238,4 +237,4 @@ class AudioDetailViewset(viewsets.ModelViewSet):
         return AudioDetailSerializer
 
     def get_queryset(self):
-        return AudioDetail.objects.filter(is_del=0, user=self.request.user)
+        return AudioDetail.objects.filter(is_del=0, user=self.request.user).order_by("add_time")

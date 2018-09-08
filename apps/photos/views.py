@@ -26,8 +26,15 @@ class GalleryViewset(viewsets.ModelViewSet):
     retrieve:
     查看某一相册明细
 
-    """
+    create:
+    添加相册
 
+    update:
+    更新相册
+
+    destroy:
+    删除相册
+    """
     pagination_class = CommonPagination
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
@@ -49,8 +56,8 @@ class GalleryViewset(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.action == "list":
-            return Gallery.objects.filter(is_del=0)
-        return Gallery.objects.filter(is_del=0, user=self.request.user)
+            return Gallery.objects.filter(is_del=0).order_by("add_time")
+        return Gallery.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class PhotoViewset(viewsets.ModelViewSet):
@@ -69,7 +76,7 @@ class PhotoViewset(viewsets.ModelViewSet):
     update:
     更新图片
 
-    destroy：
+    destroy:
     删除图片
     """
     pagination_class = CommonPagination
@@ -82,7 +89,7 @@ class PhotoViewset(viewsets.ModelViewSet):
     ordering_fields = ('add_time',)
 
     def get_queryset(self):
-        return Photo.objects.filter(is_del=0, user=self.request.user)
+        return Photo.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class GalleryDetailViewset(viewsets.ModelViewSet):
@@ -119,4 +126,4 @@ class GalleryDetailViewset(viewsets.ModelViewSet):
         return GalleryDetailSerializer
 
     def get_queryset(self):
-        return GalleryDetail.objects.filter(is_del=0, user=self.request.user)
+        return GalleryDetail.objects.filter(is_del=0, user=self.request.user).order_by("add_time")

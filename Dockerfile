@@ -11,6 +11,7 @@ WORKDIR /fafaerapis
 COPY apps /fafaerapis/apps
 COPY fafaerapis /fafaerapis/fafaerapis
 COPY extra_apps /fafaerapis/extra_apps
+COPY templates /fafaerapis/templates
 COPY manage.py requirements.txt start.sh /fafaerapis/
 
 RUN pip install -r /tmp/requirements.txt -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com \

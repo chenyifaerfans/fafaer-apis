@@ -10,7 +10,7 @@ User = get_user_model()
 
 
 class Article(models.Model):
-    title = models.CharField(max_length=20, unique=True, verbose_name="相册名")
+    title = models.CharField(max_length=20, unique=True, verbose_name="文章名")
     desc = models.CharField(max_length=100, verbose_name=u"文章描述")
     date = models.DateField(default=datetime.now, verbose_name=u'日期')
     user = models.ForeignKey(User, verbose_name=u"创建用户")

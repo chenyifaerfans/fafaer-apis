@@ -29,6 +29,7 @@ from fafaerapis.settings import DEBUG
 
 from users.views import UserViewset
 from mp.views import BannerViewset, ProfileViewset, ProfileDetailViewset
+from news.views import ArticleViewset
 from music.views import SingerViewset, AlbumViewset, AudioViewset, SongViewset, AlbumDetailViewset, AudioDetailViewset
 from photos.views import GalleryViewset, PhotoViewset, GalleryDetailViewset
 from videos.views import VideoCollectionViewset, VideoViewset, VideoCollectionDetailViewset
@@ -41,6 +42,8 @@ router.register(r'users/user', UserViewset, base_name='user')
 router.register(r'mp/banner', BannerViewset, base_name='banner')
 router.register(r'mp/profile', ProfileViewset, base_name='profile')
 router.register(r'mp/detail', ProfileDetailViewset, base_name='mp_detail')
+
+router.register(r'news', ArticleViewset, base_name='news')
 
 router.register(r'music/singer', SingerViewset, base_name='singer')
 router.register(r'music/album', AlbumViewset, base_name='album')
@@ -58,20 +61,20 @@ router.register(r'videos/video', VideoViewset, base_name='video')
 router.register(r'videos/detail', VideoCollectionDetailViewset, base_name='collection_detail')
 
 urlpatterns = [
-    url(r'^xadmin/', xadmin.site.urls),
+    url(r'^admin/', xadmin.site.urls),
 
     #
     url(r'^ueditor/', include('DjangoUeditor.urls')),
 
     #
-    url(r'^docs/', include_docs_urls(title='文档')),
+    url(r'^', include_docs_urls(title='文档', public=False)),
     url(r'^api-auth/', include('rest_framework.urls')),
 
     # drf自带的token认证模式
     url(r'^drf-auth/', obtain_auth_token),
 
     # JWT token认证模式
-    url(r'^jwt/auth/', obtain_jwt_token),
+    url(r'^login/auth/', obtain_jwt_token),
     url(r'^jwt/refresh/', refresh_jwt_token),
     url(r'^jwt/verify/', verify_jwt_token),
 
@@ -88,3 +91,13 @@ if not DEBUG:
         # settings中DEBUG为False时，必须设置
         url(r'^static/(?P<path>.*)$', serve, {"document_root": STATIC_ROOT}),
     ]
+
+
+# 全局403页面配置
+handler403 = 'users.views.page_forbidden'
+
+# 全局404页面配置
+handler404 = 'users.views.page_not_found'
+
+# 全局500页面配置
+handler500 = 'users.views.server_error'
