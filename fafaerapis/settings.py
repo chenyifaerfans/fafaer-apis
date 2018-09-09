@@ -28,6 +28,8 @@ SECRET_KEY = '6h2c+3=s7s!j@@1)dnx(wttq@qn4i$d1b(nxyw)6yb6@3=-!^j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+PRODUCTION = False
+
 ALLOWED_HOSTS = ["*"]
 
 # Application definition
@@ -171,8 +173,13 @@ DEFAULT_FILE_STORAGE = 'django_oss_storage.backends.OssMediaStorage'
 #
 OSS_ACCESS_KEY_ID = 'LTAIzh4ZeURSvNKz'
 OSS_ACCESS_KEY_SECRET = 'Gqk7nfN7JoYPMZDGa9UwDK27wANLQv'
-OSS_BUCKET_NAME = 'fafaer'
-OSS_ENDPOINT = 'cdn.chenyifaer.com'
+
+if PRODUCTION:
+    OSS_BUCKET_NAME = 'fafaerapis'
+    OSS_ENDPOINT = 'cdn.chenyifaer.com'
+else:
+    OSS_BUCKET_NAME = 'fafaerapis-dev'
+    OSS_ENDPOINT = 'dev.cdn.chenyifaer.com'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -194,7 +201,7 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=30),
-    'JWT_AUTH_HEADER_PREFIX': 'FAFAAPI',
+    'JWT_AUTH_HEADER_PREFIX': 'FAFAERAPI',
 }
 
 # 图片文件上传设置
