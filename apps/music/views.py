@@ -24,7 +24,11 @@ class SingerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.Cre
 
     retrieve:
     获取歌手明细
+
+    create:
+    创建歌手
     """
+    queryset = Singer.objects.filter(is_del=0).order_by("add_time")
     serializer_class = SingerSerializer
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
@@ -36,11 +40,6 @@ class SingerViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.Cre
         if self.action == "create":
             return [IsAuthenticated()]
         return super(SingerViewset, self).get_permissions()
-
-    def get_queryset(self):
-        if self.action == "list":
-            return Singer.objects.filter(is_del=0).order_by("add_time")
-        return Singer.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class AlbumViewset(viewsets.ModelViewSet):
@@ -63,6 +62,7 @@ class AlbumViewset(viewsets.ModelViewSet):
     删除专辑
 
     """
+    queryset = Album.objects.filter(is_del=0).order_by("add_time")
     pagination_class = CommonPagination
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
@@ -83,11 +83,6 @@ class AlbumViewset(viewsets.ModelViewSet):
         if self.action == "update" or self.action == "destroy":
             return [IsAuthenticated(), IsOwnerOrReadOnly()]
         return super(AlbumViewset, self).get_permissions()
-
-    def get_queryset(self):
-        if self.action == "list":
-            return Album.objects.filter(is_del=0).order_by("add_time")
-        return Album.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class AudioViewset(viewsets.ModelViewSet):
@@ -110,6 +105,7 @@ class AudioViewset(viewsets.ModelViewSet):
     删除电台
 
     """
+    queryset = Audio.objects.filter(is_del=0).order_by("add_time")
     pagination_class = CommonPagination
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
@@ -130,11 +126,6 @@ class AudioViewset(viewsets.ModelViewSet):
         if self.action == "update" or self.action == "destroy":
             return [IsAuthenticated(), IsOwnerOrReadOnly()]
         return super(AudioViewset, self).get_permissions()
-
-    def get_queryset(self):
-        if self.action == "list":
-            return Audio.objects.filter(is_del=0).order_by("add_time")
-        return Audio.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class SongViewset(viewsets.ModelViewSet):
@@ -157,6 +148,7 @@ class SongViewset(viewsets.ModelViewSet):
     删除歌曲
 
     """
+    queryset = Song.objects.filter(is_del=0).order_by("add_time")
     pagination_class = CommonPagination
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
@@ -169,9 +161,6 @@ class SongViewset(viewsets.ModelViewSet):
         if self.action == "create" or self.action == "update":
             return Song2Serializer
         return SongSerializer
-
-    def get_queryset(self):
-        return Song.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class AlbumDetailViewset(viewsets.ModelViewSet):

@@ -33,6 +33,7 @@ class VideoCollectionViewset(viewsets.ModelViewSet):
     删除视频合集
 
     """
+    queryset = VideoCollection.objects.filter(is_del=0).order_by("add_time")
     pagination_class = CommonPagination
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
@@ -51,11 +52,6 @@ class VideoCollectionViewset(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return VideoCollectionListDetailSerializer
         return VideoCollectionSerializer
-
-    def get_queryset(self):
-        if self.action == "list":
-            return VideoCollection.objects.filter(is_del=0).order_by("add_time")
-        return VideoCollection.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class VideoViewset(viewsets.ModelViewSet):

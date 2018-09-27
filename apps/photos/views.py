@@ -35,6 +35,7 @@ class GalleryViewset(viewsets.ModelViewSet):
     destroy:
     删除相册
     """
+    queryset = Gallery.objects.filter(is_del=0).order_by("add_time")
     pagination_class = CommonPagination
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
@@ -53,11 +54,6 @@ class GalleryViewset(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return GalleryListDetailSerializer
         return GallerySerializer
-
-    def get_queryset(self):
-        if self.action == "list":
-            return Gallery.objects.filter(is_del=0).order_by("add_time")
-        return Gallery.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class PhotoViewset(viewsets.ModelViewSet):
