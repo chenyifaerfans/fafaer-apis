@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'videos.apps.VideosConfig',
     'photos.apps.PhotosConfig',
     'news.apps.NewsConfig',
-
+    'pagedown'
 ]
 
 AUTH_USER_MODEL = "users.User"

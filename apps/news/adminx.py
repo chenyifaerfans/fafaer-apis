@@ -5,13 +5,15 @@ import xadmin
 
 from .models import Article
 from common.base import CommonAdmin
+from .forms import ArticleAdminForm
 
 
 class ArticleAdmin(CommonAdmin):
     list_display = ['title', 'desc', 'date', 'content', 'user', 'hits', 'is_top', 'add_time']
     search_fields = ['title', 'desc', 'date']
     list_filter = ['title', 'desc', 'date']
-    style_fields = {'content': 'ueditor'}
+    form = ArticleAdminForm
+    # style_fields = {'content': 'ueditor'}
     # model_icon = 'fa fa-picture-o'
 
     def queryset(self):
