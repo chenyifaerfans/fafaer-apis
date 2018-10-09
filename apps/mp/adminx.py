@@ -11,6 +11,7 @@ class BannerAdmin(CommonAdmin):
     list_display = ['name', 'desc', 'image', 'add_time', 'is_del']
     search_fields = ['name', 'desc', 'image']
     list_filter = ['name', 'desc', 'image', 'add_time']
+    ordering = ['order', 'add_time']
     # readonly_fields = ['is_del']
 
     def queryset(self):
@@ -32,6 +33,7 @@ class ProfileDetailAdmin(CommonAdmin):
     list_display = ['title', 'content', 'type', 'image', 'order', 'add_time']
     search_fields = ['title', 'content', 'type', 'image']
     list_filter = ['title', 'content', 'type', 'image', 'add_time']
+    ordering = ['order', 'add_time']
 
     def queryset(self):
         qs = super(ProfileDetailAdmin, self).queryset()
@@ -42,6 +44,7 @@ class ContactDetailAdmin(CommonAdmin):
     list_display = ['title', 'content', 'type', 'image', 'order', 'add_time']
     search_fields = ['title', 'content', 'type', 'image']
     list_filter = ['title', 'content', 'type', 'image', 'add_time']
+    ordering = ['order', 'add_time']
 
     def queryset(self):
         qs = super(ContactDetailAdmin, self).queryset()

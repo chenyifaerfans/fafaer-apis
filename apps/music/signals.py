@@ -5,8 +5,6 @@ __date__ = '2018/8/9 10:30'
 from django.dispatch import receiver
 from django.db.models.signals import post_save, post_delete, pre_save
 
-from pydub import AudioSegment
-
 from .models import Song
 
 

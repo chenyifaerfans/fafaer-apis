@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime
 
 from django.db import models
@@ -9,6 +10,7 @@ User = get_user_model()
 
 
 class Gallery(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     name = models.CharField(max_length=20, unique=True, verbose_name="相册名")
     desc = models.CharField(max_length=100, verbose_name=u"描述")
     date = models.DateField(default=datetime.now, verbose_name=u'日期')
@@ -32,9 +34,10 @@ class Gallery(models.Model):
 
 
 class Photo(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     name = models.CharField(max_length=20, unique=True, verbose_name="照片名称")
     desc = models.CharField(max_length=100, verbose_name=u"照片描述")
-    file = models.FileField(upload_to="photo/%Y/%m", verbose_name=u"照片文件")
+    file = models.ImageField(upload_to="photo/%Y/%m", verbose_name=u"照片文件")
     date = models.DateField(default=datetime.now, verbose_name=u'拍摄日期')
     user = models.ForeignKey(User, verbose_name=u"创建用户")
 
@@ -51,6 +54,7 @@ class Photo(models.Model):
 
 
 class GalleryDetail(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     gallery = models.ForeignKey(Gallery, related_name='photos', verbose_name='相册')
     photo = models.ForeignKey(Photo, verbose_name='照片')
     user = models.ForeignKey(User, verbose_name=u"创建用户")

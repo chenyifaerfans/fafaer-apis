@@ -31,3 +31,8 @@ IS_TOP_CHOICES = (
     (0, u"未置顶"),
     (1, u"已置顶")
 )
+
+APP_LAUNCHER_CHOICES = (
+    ("intro", u"引导页"),
+    ("startup", u"启动页")
+)

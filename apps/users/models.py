@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -9,7 +10,8 @@ from common.choices import GENDER_CHOICES, IS_VALID_CHOICES, IS_DEL_CHOICES, IS_
 class User(AbstractUser):
     """
         用户信息
-        """
+    """
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     nickname = models.CharField(max_length=20, default="", verbose_name=u"昵称")
     desc = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"个性签名")
     birthday = models.DateField(null=True, blank=True, verbose_name=u"生日")

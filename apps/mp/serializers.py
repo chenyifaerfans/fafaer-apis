@@ -9,7 +9,7 @@ from .models import Banner, Profile, ProfileDetail
 class BannerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Banner
-        fields = ('image', )
+        fields = ('name', 'desc', 'image', )
 
 
 class ProfileSerializer(serializers.ModelSerializer):

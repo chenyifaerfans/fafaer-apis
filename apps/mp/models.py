@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime
 from django.db import models
 from django.contrib.auth import get_user_model
@@ -8,6 +9,7 @@ User = get_user_model()
 
 
 class Banner(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     name = models.CharField(max_length=20, verbose_name=u"标题")
     desc = models.CharField(max_length=100, verbose_name=u"描述")
     image = models.ImageField(upload_to="banner/%Y/%m", max_length=100, verbose_name=u"封面")
@@ -25,6 +27,7 @@ class Banner(models.Model):
 
 
 class Profile(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     name = models.CharField(max_length=20, verbose_name=u"标题")
     desc = models.CharField(max_length=100, verbose_name=u"描述")
     avatar = models.ImageField(upload_to="avatar/%Y/%m", max_length=100, default=u"avatar/default.png",
@@ -42,6 +45,7 @@ class Profile(models.Model):
 
 
 class ProfileDetail(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     title = models.CharField(max_length=20, verbose_name=u"标题")
     content = models.CharField(max_length=100, verbose_name=u"内容")
     type = models.CharField(choices=CONTENT_CHOICES, max_length=8, verbose_name=u"类型", help_text=u'类型')

@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'videos.apps.VideosConfig',
     'photos.apps.PhotosConfig',
     'news.apps.NewsConfig',
+    'appintro.apps.AppintroConfig',
     'pagedown'
 ]
 

@@ -29,7 +29,6 @@ openpyxl==2.5.5
 oss2==2.5.0
 Pillow==5.2.0
 pycryptodome==3.6.4
-pydub==0.22.1
 PyJWT==1.6.4
 pytz==2018.5
 PyYAML==3.13

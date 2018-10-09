@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime
 from django.db import models
 from django.contrib.auth import get_user_model
@@ -8,6 +9,7 @@ User = get_user_model()
 
 
 class VideoCollection(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     name = models.CharField(max_length=30, unique=True, verbose_name="视频合集名")
     desc = models.CharField(max_length=100, verbose_name=u"描述")
     date = models.DateField(default=datetime.now, verbose_name=u'日期')
@@ -31,6 +33,7 @@ class VideoCollection(models.Model):
 
 
 class Video(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     name = models.CharField(max_length=30, unique=True, verbose_name="视频名称")
     desc = models.CharField(max_length=100, verbose_name=u"视频描述")
     file = models.FileField(upload_to="video/%Y/%m", verbose_name=u"视频文件")
@@ -50,6 +53,7 @@ class Video(models.Model):
 
 
 class VideoCollectionDetail(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     video_collection = models.ForeignKey(VideoCollection, related_name='videos', verbose_name='视频合集')
     video = models.ForeignKey(Video, verbose_name='视频')
     user = models.ForeignKey(User, verbose_name=u"创建用户")

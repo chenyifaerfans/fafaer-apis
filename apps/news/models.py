@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime
 
 from django.db import models
@@ -10,7 +11,9 @@ User = get_user_model()
 
 
 class Article(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     title = models.CharField(max_length=20, unique=True, verbose_name="文章名")
+    cover_img = models.ImageField(upload_to="article/%Y/%m", default=None, verbose_name=u"封面照片文件")
     desc = models.CharField(max_length=100, verbose_name=u"文章描述")
     date = models.DateField(default=datetime.now, verbose_name=u'日期')
     user = models.ForeignKey(User, verbose_name=u"创建用户")

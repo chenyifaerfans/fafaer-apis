@@ -1,4 +1,5 @@
 # _*_ coding:utf-8 _*_
+import uuid
 from datetime import datetime
 from django.db import models
 from django.contrib.auth import get_user_model
@@ -9,6 +10,7 @@ User = get_user_model()
 
 
 class Singer(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     nickname = models.CharField(max_length=20, verbose_name="昵称")
     desc = models.CharField(max_length=100, verbose_name=u"描述")
     avatar = models.ImageField(upload_to="singer/avatar/%Y/%m", max_length=100, verbose_name='歌手头像')
@@ -30,6 +32,7 @@ class Singer(models.Model):
 
 
 class Album(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     name = models.CharField(max_length=20, verbose_name="专辑名")
     desc = models.CharField(max_length=100, verbose_name=u"描述")
     singer = models.ForeignKey(Singer, verbose_name='歌手')
@@ -57,6 +60,7 @@ class Album(models.Model):
 
 
 class Audio(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     name = models.CharField(max_length=20, verbose_name="电台名")
     desc = models.CharField(max_length=100, verbose_name=u"描述")
     singer = models.ForeignKey(Singer, verbose_name='歌手')
@@ -80,6 +84,7 @@ class Audio(models.Model):
 
 
 class Song(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     name = models.CharField(max_length=20, verbose_name=u"歌名")
     desc = models.CharField(max_length=100, verbose_name=u"描述")
     singer = models.ForeignKey(Singer, verbose_name=u'歌手')
@@ -101,6 +106,7 @@ class Song(models.Model):
 
 
 class AlbumDetail(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     album = models.ForeignKey(Album, related_name='songs', verbose_name=u'专辑')
     song = models.ForeignKey(Song, verbose_name=u'歌曲')
     user = models.ForeignKey(User, verbose_name=u"创建用户")
@@ -119,6 +125,7 @@ class AlbumDetail(models.Model):
 
 
 class AudioDetail(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     audio = models.ForeignKey(Audio, related_name='songs', verbose_name=u'电台')
     song = models.ForeignKey(Song, verbose_name=u'歌曲')
     user = models.ForeignKey(User, verbose_name=u"创建用户")
