@@ -56,4 +56,3 @@ class GalleryDetailAdmin(CommonAdmin):
 xadmin.site.register(Gallery, GalleryAdmin)
 xadmin.site.register(Photo, PhotoAdmin)
 xadmin.site.register(GalleryDetail, GalleryDetailAdmin)
-

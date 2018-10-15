@@ -175,12 +175,32 @@ DEFAULT_FILE_STORAGE = 'django_oss_storage.backends.OssMediaStorage'
 OSS_ACCESS_KEY_ID = 'LTAIzh4ZeURSvNKz'
 OSS_ACCESS_KEY_SECRET = 'Gqk7nfN7JoYPMZDGa9UwDK27wANLQv'
 
+if 'OSS_ACCESS_KEY_ID' in os.environ:
+    OSS_ACCESS_KEY_ID = os.getenv('OSS_ACCESS_KEY_ID')
+if not OSS_ACCESS_KEY_ID:
+    raise RuntimeError('OSS_ACCESS_KEY_ID is None')
+
+if 'OSS_ACCESS_KEY_SECRET' in os.environ:
+    OSS_ACCESS_KEY_SECRET = os.getenv('OSS_ACCESS_KEY_SECRET')
+if not OSS_ACCESS_KEY_SECRET:
+    raise RuntimeError('OSS_ACCESS_KEY_SECRET is None')
+
 if PRODUCTION:
     OSS_BUCKET_NAME = 'fafaerapis'
     OSS_ENDPOINT = 'cdn.chenyifaer.com'
 else:
     OSS_BUCKET_NAME = 'fafaerapis-dev'
     OSS_ENDPOINT = 'dev.cdn.chenyifaer.com'
+
+if 'OSS_BUCKET_NAME' in os.environ:
+    OSS_BUCKET_NAME = os.getenv('OSS_BUCKET_NAME')
+if not OSS_BUCKET_NAME:
+    raise RuntimeError('OSS_BUCKET_NAME is None')
+
+if 'OSS_ENDPOINT' in os.environ:
+    OSS_ENDPOINT = os.getenv('OSS_ENDPOINT')
+if not OSS_ENDPOINT:
+    raise RuntimeError('OSS_ENDPOINT is None')
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,

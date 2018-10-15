@@ -32,6 +32,11 @@ IS_TOP_CHOICES = (
     (1, u"已置顶")
 )
 
+IS_RECOMMEND_CHOICES = (
+    (0, u"未推荐"),
+    (1, u"已推荐")
+)
+
 APP_LAUNCHER_CHOICES = (
     ("intro", u"引导页"),
     ("startup", u"启动页")

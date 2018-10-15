@@ -30,7 +30,7 @@ from fafaerapis.settings import DEBUG
 from users.views import UserViewset
 from mp.views import BannerViewset, ProfileViewset, ProfileDetailViewset
 from appintro.views import AppIntroViewset
-from news.views import ArticleViewset
+from news.views import BannerViewset as ArticleBannerViewset, ArticleViewset, TopicViewset, RecommendViewset
 from music.views import SingerViewset, AlbumViewset, AudioViewset, SongViewset, AlbumDetailViewset, AudioDetailViewset
 from photos.views import GalleryViewset, PhotoViewset, GalleryDetailViewset
 from videos.views import VideoCollectionViewset, VideoViewset, VideoCollectionDetailViewset
@@ -46,7 +46,10 @@ router.register(r'mp/detail', ProfileDetailViewset, base_name='mp_detail')
 
 router.register(r'app/intro', AppIntroViewset, base_name='app_intro')
 
-router.register(r'news', ArticleViewset, base_name='news')
+router.register(r'news/articles', ArticleViewset, base_name='news_articles')
+router.register(r'news/banners', ArticleBannerViewset, base_name='news_banners')
+router.register(r'news/topics', TopicViewset, base_name='news_topics')
+router.register(r'news/recommends', RecommendViewset, base_name='news_recommends')
 
 router.register(r'music/singer', SingerViewset, base_name='singer')
 router.register(r'music/album', AlbumViewset, base_name='album')
