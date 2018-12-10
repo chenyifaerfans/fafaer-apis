@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from markdownx.models import MarkdownxField
 from DjangoUeditor.models import UEditorField
 
 from common.choices import IS_DEL_CHOICES, IS_TOP_CHOICES, IS_RECOMMEND_CHOICES
@@ -39,7 +40,7 @@ class Article(models.Model):
     # content = UEditorField(width=600, height=300, imagePath="article/ueditor/", filePath="article/ueditor/",
     #                        upload_settings={"imageMaxSize": 1204000}, default="", verbose_name=u"文章详细信息")
 
-    content = models.TextField(verbose_name=u"文章详细信息")
+    content = MarkdownxField(verbose_name=u"文章详细信息")
 
     hits = models.IntegerField(default=0, verbose_name=u"点击量")
     is_top = models.IntegerField(choices=IS_TOP_CHOICES, default=0, verbose_name=u"是否置顶")

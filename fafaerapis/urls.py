@@ -89,6 +89,9 @@ urlpatterns = [
     # 配置上传文件的处理
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
 
+    # markdown
+    url(r'^markdownx/', include('markdownx.urls')),
+
 ]
 
 if not DEBUG:

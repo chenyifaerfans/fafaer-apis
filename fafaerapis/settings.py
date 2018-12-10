@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'photos.apps.PhotosConfig',
     'news.apps.NewsConfig',
     'appintro.apps.AppintroConfig',
-    'pagedown'
+    'markdownx'
 ]
 
 AUTH_USER_MODEL = "users.User"

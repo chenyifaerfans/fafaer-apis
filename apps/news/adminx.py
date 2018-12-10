@@ -2,10 +2,10 @@
 __author__ = 'WANGY'
 __date__ = '2018/8/22 23:11'
 import xadmin
+from markdownx.admin import MarkdownxModelAdmin
 
 from .models import Banner, Article, Topic, Recommend, TopicDetail, RecommendDetail
 from common.base import CommonAdmin
-from .forms import ArticleAdminForm
 
 
 class BannerAdmin(CommonAdmin):
@@ -24,7 +24,6 @@ class ArticleAdmin(CommonAdmin):
     list_display = ['title', 'desc', 'date', 'content', 'user', 'hits', 'is_top', 'add_time']
     search_fields = ['title', 'desc', 'date']
     list_filter = ['title', 'desc', 'date']
-    form = ArticleAdminForm
     # style_fields = {'content': 'ueditor'}
     # model_icon = 'fa fa-picture-o'
 

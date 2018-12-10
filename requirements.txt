@@ -11,7 +11,7 @@ django-crispy-forms==1.7.2
 django-filter==2.0.0
 django-formtools==2.1
 django-import-export==1.0.1
-django-pagedown==1.0.6
+django-markdownx==2.0.28
 djangorestframework==3.8.2
 djangorestframework-jwt==1.11.0
 et-xmlfile==1.0.1
