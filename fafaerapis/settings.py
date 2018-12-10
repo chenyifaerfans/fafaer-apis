@@ -107,7 +107,8 @@ if 'DATABASE' in os.environ:
             'NAME': os.getenv('DATABASE', 'fafaerapis'),
             'USER': os.getenv('USER', 'root'),
             'PASSWORD': os.getenv('PASSWORD', 'Pa55Word'),
-            'HOST': os.getenv('HOST', '127.0.0.1')
+            'HOST': os.getenv('HOST', '127.0.0.1'),
+            'OPTIONS': {'charset': 'utf8mb4'},
         }
     }
 else:
@@ -119,7 +120,7 @@ else:
             'PASSWORD': 'Pa55Word',
             'HOST': '127.0.0.1',
             # 'OPTIONS': {'init_command': 'SET storage_engine=INNODB;'}
-            'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'}
+            'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;', 'charset': 'utf8mb4'},
         }
     }
 
