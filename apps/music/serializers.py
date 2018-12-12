@@ -2,7 +2,6 @@
 __author__ = 'WANGY'
 __date__ = '2018/8/9 12:43'
 import datetime
-from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
@@ -27,6 +26,11 @@ class SingerSerializer(CommonSerializer):
 
 class AlbumSerializer(CommonSerializer):
     singer = SingerSerializer()
+
+    count = serializers.SerializerMethodField()
+
+    def get_count(self, obj):
+        return obj.songs.filter(is_del=0).count()
 
     class Meta:
         model = Album
@@ -76,15 +80,23 @@ class Album2Serializer(CommonSerializer):
 
     class Meta:
         model = Album
-        exclude = ('is_del', 'add_time', 'update_time')
+        fields= ('id', "name", 'desc', 'singer', 'cover_img', 'background_img', 'release_date', 'release_company',
+                 'user', 'count', 'add_timestamp', 'update_timestamp')
+        # exclude = ('is_del', 'add_time', 'update_time')
 
 
 class AudioSerializer(CommonSerializer):
     singer = SingerSerializer()
 
+    count = serializers.SerializerMethodField()
+
+    def get_count(self, obj):
+        return obj.songs.filter(is_del=0).count()
+
     class Meta:
         model = Audio
-        exclude = ('is_del', 'add_time', 'update_time')
+        fields= ('id', 'name', 'desc', 'singer', 'user', 'count', 'add_timestamp', 'update_timestamp')
+        # exclude = ('is_del', 'add_time', 'update_time')
 
 
 class Audio2Serializer(CommonSerializer):
