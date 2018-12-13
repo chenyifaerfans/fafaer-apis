@@ -80,7 +80,7 @@ class AlbumViewset(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action == "create":
             return [IsAuthenticated()]
-        if self.action == "update" or self.action == "destroy":
+        if self.action == "update" or self.action == "partial_update" or self.action == "destroy":
             return [IsAuthenticated(), IsOwnerOrReadOnly()]
         return super(AlbumViewset, self).get_permissions()
 
@@ -123,7 +123,7 @@ class AudioViewset(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action == "create":
             return [IsAuthenticated()]
-        if self.action == "update" or self.action == "destroy":
+        if self.action == "update" or self.action == "partial_update" or self.action == "destroy":
             return [IsAuthenticated(), IsOwnerOrReadOnly()]
         return super(AudioViewset, self).get_permissions()
 

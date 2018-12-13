@@ -44,7 +44,7 @@ class VideoCollectionViewset(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action == "create":
             return [IsAuthenticated()]
-        if self.action == "update" or self.action == "destroy":
+        if self.action == "update" or self.action == "partial_update" or self.action == "destroy":
             return [IsAuthenticated(), IsOwnerOrReadOnly()]
         return super(VideoCollectionViewset, self).get_permissions()
 

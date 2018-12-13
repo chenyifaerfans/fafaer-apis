@@ -43,7 +43,7 @@ class GalleryViewset(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action == "create":
             return [IsAuthenticated()]
-        if self.action == "update" or self.action == "destroy":
+        if self.action == "partial_update" or self.action == "update" or self.action == "destroy":
             return [IsAuthenticated(), IsOwnerOrReadOnly()]
         return super(GalleryViewset, self).get_permissions()
 

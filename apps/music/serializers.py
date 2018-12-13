@@ -34,7 +34,9 @@ class AlbumSerializer(CommonSerializer):
 
     class Meta:
         model = Album
-        exclude = ('is_del', 'add_time', 'update_time')
+        fields= ('id', "name", 'desc', 'singer', 'cover_img', 'background_img', 'release_date', 'release_company',
+                 'user', 'count', 'add_timestamp', 'update_timestamp')
+        # exclude = ('is_del', 'add_time', 'update_time')
 
 
 class Album2Serializer(CommonSerializer):
@@ -80,9 +82,7 @@ class Album2Serializer(CommonSerializer):
 
     class Meta:
         model = Album
-        fields= ('id', "name", 'desc', 'singer', 'cover_img', 'background_img', 'release_date', 'release_company',
-                 'user', 'count', 'add_timestamp', 'update_timestamp')
-        # exclude = ('is_del', 'add_time', 'update_time')
+        exclude = ('is_del', 'add_time', 'update_time')
 
 
 class AudioSerializer(CommonSerializer):
@@ -164,9 +164,16 @@ class AlbumDetail2Serializer(CommonSerializer):
 class AlbumListDetailSerializer(CommonSerializer):
     songs = AlbumDetailSerializer(many=True)
 
+    count = serializers.SerializerMethodField()
+
+    def get_count(self, obj):
+        return obj.songs.filter(is_del=0).count()
+
     class Meta:
         model = Album
-        exclude = ('is_del', 'add_time', 'update_time')
+        fields= ('id', "name", 'desc', 'singer', 'cover_img', 'background_img', 'release_date', 'release_company',
+                 'user', 'count', 'add_timestamp', 'update_timestamp')
+        # exclude = ('is_del', 'add_time', 'update_time')
 
 
 class AudioDetailSerializer(CommonSerializer):
@@ -198,6 +205,12 @@ class AudioDetail2Serializer(CommonSerializer):
 class AudioListDetailSerializer(CommonSerializer):
     songs = AudioDetailSerializer(many=True)
 
+    count = serializers.SerializerMethodField()
+
+    def get_count(self, obj):
+        return obj.songs.filter(is_del=0).count()
+
     class Meta:
         model = Audio
-        exclude = ('is_del', 'add_time', 'update_time')
+        fields= ('id', 'name', 'desc', 'singer', 'user', 'songs', 'count', 'add_timestamp', 'update_timestamp')
+        # exclude = ('is_del', 'add_time', 'update_time')

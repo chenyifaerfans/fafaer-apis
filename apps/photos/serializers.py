@@ -68,6 +68,12 @@ class GalleryDetail2Serializer(CommonSerializer):
 class GalleryListDetailSerializer(CommonSerializer):
     photos = GalleryDetailSerializer(many=True)
 
+    count = serializers.SerializerMethodField()
+
+    def get_count(self, obj):
+        return obj.photos.filter(is_del=0).count()
+
     class Meta:
         model = Gallery
-        exclude = ('is_del', 'add_time', 'update_time')
+        fields= ('id', 'name', 'desc', 'date', 'user', 'photos', 'count', 'add_timestamp', 'update_timestamp')
+        # exclude = ('is_del', 'add_time', 'update_time')

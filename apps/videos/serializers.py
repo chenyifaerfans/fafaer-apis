@@ -68,6 +68,12 @@ class VideoCollectionDetail2Serializer(CommonSerializer):
 class VideoCollectionListDetailSerializer(CommonSerializer):
     videos = VideoCollectionDetailSerializer(many=True)
 
+    count = serializers.SerializerMethodField()
+
+    def get_count(self, obj):
+        return obj.videos.filter(is_del=0).count()
+
     class Meta:
         model = VideoCollection
-        exclude = ('is_del', 'add_time', 'update_time')
+        fields= ('id', 'name', 'desc', 'date', 'user', 'videos', 'count', 'add_timestamp', 'update_timestamp')
+        # exclude = ('is_del', 'add_time', 'update_time')
