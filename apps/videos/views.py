@@ -8,7 +8,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from common.permissions import IsOwnerOrReadOnly
 from .models import VideoCollection, Video, VideoCollectionDetail
 from .paginations import CommonPagination
-from .filters import VideoCollectionFilter
+from .filters import VideoCollectionFilter, VideoCollectionDetailFilter
 from .serializers import VideoCollectionSerializer, VideoSerializer, VideoCollectionDetailSerializer,\
     VideoCollectionListDetailSerializer, VideoCollectionDetail2Serializer
 
@@ -103,14 +103,26 @@ class VideoCollectionDetailViewset(viewsets.ModelViewSet):
     删除视频合集明细
 
     """
+    queryset = VideoCollectionDetail.objects.filter(is_del=0).order_by("add_time")
     pagination_class = CommonPagination
-    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    # permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    filter_class = VideoCollectionDetailFilter
+    search_fields = ('video__name', 'video__desc')
+    ordering_fields = ('add_time',)
+
+    def get_permissions(self):
+        if self.action == "create":
+            return [IsAuthenticated()]
+        if self.action == "update" or self.action == "partial_update" or self.action == "destroy":
+            return [IsAuthenticated(), IsOwnerOrReadOnly()]
+        return super(VideoCollectionDetailViewset, self).get_permissions()
 
     def get_serializer_class(self):
         if self.action == "create" or self.action == "update":
             return VideoCollectionDetail2Serializer
         return VideoCollectionDetailSerializer
 
-    def get_queryset(self):
-        return VideoCollectionDetail.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
+    # def get_queryset(self):
+    #     return VideoCollectionDetail.objects.filter(is_del=0, user=self.request.user).order_by("add_time")

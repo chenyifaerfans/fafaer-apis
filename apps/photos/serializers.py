@@ -14,7 +14,6 @@ class GallerySerializer(CommonSerializer):
     user = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
     )
-
     count = serializers.SerializerMethodField()
 
     def get_count(self, obj):
@@ -67,7 +66,6 @@ class GalleryDetail2Serializer(CommonSerializer):
 
 class GalleryListDetailSerializer(CommonSerializer):
     photos = GalleryDetailSerializer(many=True)
-
     count = serializers.SerializerMethodField()
 
     def get_count(self, obj):

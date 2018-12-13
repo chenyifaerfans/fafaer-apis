@@ -4,7 +4,7 @@ __date__ = '2018/8/9 12:43'
 
 import django_filters
 
-from .models import Singer, Album, Audio, Song
+from .models import Singer, Album, Audio, Song, AlbumDetail, AudioDetail
 
 
 class SingerFilter(django_filters.rest_framework.FilterSet):
@@ -47,3 +47,21 @@ class SongFilter(django_filters.rest_framework.FilterSet):
     class Meta:
         model = Song
         fields = ('name', 'desc')
+
+
+class AlbumDetailFilter():
+    album_id = django_filters.UUIDFilter(field_name='album__id', lookup_expr='exact', label='专辑id 精准查询',
+                                           help_text='专辑id 精准查询')
+
+    class Meta:
+        model = AlbumDetail
+        fields = ('album_id',)
+
+
+class AudioDetailFilter():
+    audio_id = django_filters.UUIDFilter(field_name='audio__id', lookup_expr='exact', label='电台id 精准查询',
+                                           help_text='电台id 精准查询')
+
+    class Meta:
+        model = AudioDetail
+        fields = ('audio_id',)

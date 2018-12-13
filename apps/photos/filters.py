@@ -3,7 +3,7 @@ __author__ = 'WANGY'
 __date__ = '2018/8/9 12:43'
 import django_filters
 
-from .models import Gallery
+from .models import Gallery, GalleryDetail
 
 
 class GalleryFilter(django_filters.rest_framework.FilterSet):
@@ -16,3 +16,12 @@ class GalleryFilter(django_filters.rest_framework.FilterSet):
     class Meta:
         model = Gallery
         fields = ('name', 'desc')
+
+
+class GalleryDetailFilter(django_filters.rest_framework.FilterSet):
+    gallery_id = django_filters.UUIDFilter(field_name='gallery__id', lookup_expr='exact', label='相册id 精准查询',
+                                           help_text='相册id 精准查询')
+
+    class Meta:
+        model = GalleryDetail
+        fields = ('gallery_id',)

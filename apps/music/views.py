@@ -11,7 +11,7 @@ from .models import Singer, Album, Audio, Song, AlbumDetail, AudioDetail
 from .serializers import SingerSerializer, AlbumSerializer, AudioSerializer, SongSerializer, AlbumListDetailSerializer, \
     AudioListDetailSerializer, AlbumDetailSerializer, AlbumDetail2Serializer, AudioDetailSerializer, \
     AudioDetail2Serializer, Album2Serializer, Audio2Serializer, Song2Serializer
-from .filters import SingerFilter, AlbumFilter, AudioFilter, SongFilter
+from .filters import SingerFilter, AlbumFilter, AudioFilter, SongFilter, AlbumDetailFilter, AudioDetailFilter
 from .paginations import CommonPagination
 
 
@@ -183,17 +183,29 @@ class AlbumDetailViewset(viewsets.ModelViewSet):
     删除专辑详情
 
     """
+    queryset = AlbumDetail.objects.filter(is_del=0).order_by("add_time")
     pagination_class = CommonPagination
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
-    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    # permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    filter_class = AlbumDetailFilter
+    search_fields = ('song__name', 'song__desc')
+    ordering_fields = ('add_time',)
+
+    def get_permissions(self):
+        if self.action == "create":
+            return [IsAuthenticated()]
+        if self.action == "update" or self.action == "partial_update" or self.action == "destroy":
+            return [IsAuthenticated(), IsOwnerOrReadOnly()]
+        return super(AlbumDetailViewset, self).get_permissions()
 
     def get_serializer_class(self):
         if self.action == "create" or self.action == "update":
             return AlbumDetail2Serializer
         return AlbumDetailSerializer
 
-    def get_queryset(self):
-        return AlbumDetail.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
+    # def get_queryset(self):
+    #     return AlbumDetail.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
 
 
 class AudioDetailViewset(viewsets.ModelViewSet):
@@ -216,14 +228,26 @@ class AudioDetailViewset(viewsets.ModelViewSet):
     删除电台详情
 
     """
+    queryset = AudioDetail.objects.filter(is_del=0).order_by("add_time")
     pagination_class = CommonPagination
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
-    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    # permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    filter_class = AudioDetailFilter
+    search_fields = ('song__name', 'song__desc')
+    ordering_fields = ('add_time',)
+
+    def get_permissions(self):
+        if self.action == "create":
+            return [IsAuthenticated()]
+        if self.action == "update" or self.action == "partial_update" or self.action == "destroy":
+            return [IsAuthenticated(), IsOwnerOrReadOnly()]
+        return super(AudioDetailViewset, self).get_permissions()
 
     def get_serializer_class(self):
         if self.action == "create" or self.action == "update":
             return AudioDetail2Serializer
         return AudioDetailSerializer
 
-    def get_queryset(self):
-        return AudioDetail.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
+    # def get_queryset(self):
+    #     return AudioDetail.objects.filter(is_del=0, user=self.request.user).order_by("add_time")

@@ -8,7 +8,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from common.permissions import IsOwnerOrReadOnly
 from .models import Gallery, Photo, GalleryDetail
 from .paginations import CommonPagination
-from .filters import GalleryFilter
+from .filters import GalleryFilter, GalleryDetailFilter
 from .serializers import GallerySerializer, PhotoSerializer, GalleryListDetailSerializer, GalleryDetailSerializer, \
     GalleryDetail2Serializer
 
@@ -105,18 +105,26 @@ class GalleryDetailViewset(viewsets.ModelViewSet):
     删除相册中的图片
 
     """
+    queryset = GalleryDetail.objects.filter(is_del=0).order_by("add_time")
     pagination_class = CommonPagination
-    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    # permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    # filter_class = GalleryFilter
-    search_fields = ('name', 'desc')
+    filter_class = GalleryDetailFilter
+    search_fields = ('photo__name', 'photo__desc')
     ordering_fields = ('add_time',)
+
+    def get_permissions(self):
+        if self.action == "create":
+            return [IsAuthenticated()]
+        if self.action == "partial_update" or self.action == "update" or self.action == "destroy":
+            return [IsAuthenticated(), IsOwnerOrReadOnly()]
+        return super(GalleryDetailViewset, self).get_permissions()
 
     def get_serializer_class(self):
         if self.action == "create" or self.action == "update":
             return GalleryDetail2Serializer
         return GalleryDetailSerializer
 
-    def get_queryset(self):
-        return GalleryDetail.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
+    # def get_queryset(self):
+    #     return GalleryDetail.objects.filter(is_del=0, user=self.request.user).order_by("add_time")
