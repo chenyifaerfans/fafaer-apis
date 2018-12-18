@@ -49,7 +49,7 @@ class SongFilter(django_filters.rest_framework.FilterSet):
         fields = ('name', 'desc')
 
 
-class AlbumDetailFilter():
+class AlbumDetailFilter(django_filters.rest_framework.FilterSet):
     album_id = django_filters.UUIDFilter(field_name='album__id', lookup_expr='exact', label='专辑id 精准查询',
                                            help_text='专辑id 精准查询')
 
@@ -58,7 +58,7 @@ class AlbumDetailFilter():
         fields = ('album_id',)
 
 
-class AudioDetailFilter():
+class AudioDetailFilter(django_filters.rest_framework.FilterSet):
     audio_id = django_filters.UUIDFilter(field_name='audio__id', lookup_expr='exact', label='电台id 精准查询',
                                            help_text='电台id 精准查询')
 

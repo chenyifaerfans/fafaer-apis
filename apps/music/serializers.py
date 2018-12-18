@@ -172,7 +172,7 @@ class AlbumListDetailSerializer(CommonSerializer):
     class Meta:
         model = Album
         fields= ('id', "name", 'desc', 'singer', 'cover_img', 'background_img', 'release_date', 'release_company',
-                 'user', 'count', 'add_timestamp', 'update_timestamp')
+                 'user', 'songs', 'count', 'add_timestamp', 'update_timestamp')
         # exclude = ('is_del', 'add_time', 'update_time')
 
 
