@@ -22,6 +22,8 @@ from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
 
+from rest_framework_swagger.views import get_swagger_view
+
 from django.views.static import serve
 
 from fafaerapis.settings import MEDIA_ROOT
@@ -73,7 +75,8 @@ urlpatterns = [
     url(r'^ueditor/', include('DjangoUeditor.urls')),
 
     #
-    url(r'^', include_docs_urls(title='文档', public=False)),
+    # url(r'^', include_docs_urls(title='文档', public=False)),
+    url(r'^$', get_swagger_view(title='文档')),
     url(r'^api-auth/', include('rest_framework.urls')),
 
     # drf自带的token认证模式

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_oss_storage',
     'rest_framework',
+    'rest_framework_swagger',
     'rest_framework.authtoken',
     'users.apps.UsersConfig',
     'mp.apps.MpConfig',
@@ -220,6 +221,9 @@ REST_FRAMEWORK = {
         'user': '5/second'
     }
 }
+
+LOGIN_URL = 'rest_framework:login'
+LOGOUT_URL = 'rest_framework:logout'
 
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=30),
