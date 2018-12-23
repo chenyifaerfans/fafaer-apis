@@ -14,6 +14,9 @@ class Gallery(models.Model):
     name = models.CharField(max_length=20, unique=True, verbose_name="相册名")
     desc = models.CharField(max_length=100, verbose_name=u"描述")
     date = models.DateField(default=datetime.now, verbose_name=u'日期')
+    cover_img = models.ImageField(upload_to="photos/gallery/cover/%Y/%m", max_length=100, verbose_name='相册图片')
+    background_img = models.ImageField(upload_to="photos/gallery/background/%Y/%m",
+                                       max_length=100, verbose_name='相册背景图片')
     user = models.ForeignKey(User, verbose_name=u"创建用户")
 
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u"创建时间")
@@ -37,7 +40,7 @@ class Photo(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name=u"主键")
     name = models.CharField(max_length=20, unique=True, verbose_name="照片名称")
     desc = models.CharField(max_length=100, verbose_name=u"照片描述")
-    file = models.ImageField(upload_to="photo/%Y/%m", verbose_name=u"照片文件")
+    file = models.ImageField(upload_to="photos/photo/%Y/%m", verbose_name=u"照片文件")
     date = models.DateField(default=datetime.now, verbose_name=u'拍摄日期')
     user = models.ForeignKey(User, verbose_name=u"创建用户")
 

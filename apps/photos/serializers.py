@@ -21,7 +21,7 @@ class GallerySerializer(CommonSerializer):
 
     class Meta:
         model = Gallery
-        fields= ('id', 'name', 'desc', 'date', 'user', 'count', 'add_timestamp', 'update_timestamp')
+        fields= ('id', 'name', 'desc', 'date', 'user', 'count', 'cover_img', 'background_img', 'add_timestamp', 'update_timestamp')
         # exclude = ('is_del', 'add_time', 'update_time')
 
 

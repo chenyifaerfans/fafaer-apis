@@ -95,7 +95,7 @@ class AudioSerializer(CommonSerializer):
 
     class Meta:
         model = Audio
-        fields= ('id', 'name', 'desc', 'singer', 'user', 'count', 'add_timestamp', 'update_timestamp')
+        fields= ('id', 'name', 'desc', 'singer', 'user', 'count', 'cover_img', 'background_img', 'release_date', 'add_timestamp', 'update_timestamp')
         # exclude = ('is_del', 'add_time', 'update_time')
 
 

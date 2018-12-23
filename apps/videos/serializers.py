@@ -22,7 +22,7 @@ class VideoCollectionSerializer(CommonSerializer):
 
     class Meta:
         model = VideoCollection
-        fields= ('id', 'name', 'desc', 'date', 'user', 'count', 'add_timestamp', 'update_timestamp')
+        fields= ('id', 'name', 'desc', 'date', 'user', 'count', 'cover_img', 'background_img', 'add_timestamp', 'update_timestamp')
         # exclude = ('is_del', 'add_time', 'update_time')
 
 
@@ -75,5 +75,5 @@ class VideoCollectionListDetailSerializer(CommonSerializer):
 
     class Meta:
         model = VideoCollection
-        fields= ('id', 'name', 'desc', 'date', 'user', 'videos', 'count', 'add_timestamp', 'update_timestamp')
+        fields= ('id', 'name', 'desc', 'date', 'user', 'videos', 'count', 'cover_img', 'background_img', 'add_timestamp', 'update_timestamp')
         # exclude = ('is_del', 'add_time', 'update_time')
