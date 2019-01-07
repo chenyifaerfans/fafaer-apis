@@ -37,6 +37,8 @@ from music.views import SingerViewset, AlbumViewset, AudioViewset, SongViewset, 
 from photos.views import GalleryViewset, PhotoViewset, GalleryDetailViewset
 from videos.views import VideoCollectionViewset, VideoViewset, VideoCollectionDetailViewset
 
+from public_welfare.views import LostViewset
+
 import xadmin
 
 router = DefaultRouter()
@@ -67,6 +69,8 @@ router.register(r'photos/detail', GalleryDetailViewset, base_name='detail')
 router.register(r'videos/collection', VideoCollectionViewset, base_name='collection')
 router.register(r'videos/video', VideoViewset, base_name='video')
 router.register(r'videos/detail', VideoCollectionDetailViewset, base_name='collection_detail')
+
+router.register(r'public_welfare/lost', LostViewset, base_name='lost')
 
 urlpatterns = [
     url(r'^admin/', xadmin.site.urls),

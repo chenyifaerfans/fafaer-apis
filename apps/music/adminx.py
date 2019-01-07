@@ -44,6 +44,11 @@ class AlbumAdmin(CommonAdmin):
             return qs.filter(is_del=0)
         return qs.filter(is_del=0, user=self.request.user)
 
+    def get_model_form(self, **kwargs):
+        form = super(AlbumAdmin, self).get_model_form(**kwargs)
+        form.base_fields['user'].initial = self.request.user
+        return form
+
 
 class AudioAdmin(CommonAdmin):
     list_display = ['name', 'desc', 'singer', 'get_audio_songs_count', 'user']
@@ -56,6 +61,11 @@ class AudioAdmin(CommonAdmin):
         if self.request.user.is_superuser:
             return qs.filter(is_del=0)
         return qs.filter(is_del=0, user=self.request.user)
+
+    def get_model_form(self, **kwargs):
+        form = super(AudioAdmin, self).get_model_form(**kwargs)
+        form.base_fields['user'].initial = self.request.user
+        return form
 
 
 class SongAdmin(CommonAdmin):
@@ -70,6 +80,11 @@ class SongAdmin(CommonAdmin):
             return qs.filter(is_del=0)
         return qs.filter(is_del=0, user=self.request.user)
 
+    def get_model_form(self, **kwargs):
+        form = super(SongAdmin, self).get_model_form(**kwargs)
+        form.base_fields['user'].initial = self.request.user
+        return form
+
 
 class AlbumDetailAdmin(CommonAdmin):
     list_display = ['album', 'song', 'user', 'add_time']
@@ -82,6 +97,11 @@ class AlbumDetailAdmin(CommonAdmin):
             return qs.filter(is_del=0)
         return qs.filter(is_del=0, user=self.request.user)
 
+    def get_model_form(self, **kwargs):
+        form = super(AlbumDetailAdmin, self).get_model_form(**kwargs)
+        form.base_fields['user'].initial = self.request.user
+        return form
+
 
 class AudioDetailAdmin(CommonAdmin):
     list_display = ['audio', 'song', 'user', 'add_time']
@@ -93,6 +113,11 @@ class AudioDetailAdmin(CommonAdmin):
         if self.request.user.is_superuser:
             return qs.filter(is_del=0)
         return qs.filter(is_del=0, user=self.request.user)
+
+    def get_model_form(self, **kwargs):
+        form = super(AudioDetailAdmin, self).get_model_form(**kwargs)
+        form.base_fields['user'].initial = self.request.user
+        return form
 
 
 xadmin.site.register(Singer, SingerAdmin)

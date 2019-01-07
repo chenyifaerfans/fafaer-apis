@@ -33,6 +33,11 @@ class ArticleAdmin(CommonAdmin):
             return qs.filter(is_del=0)
         return qs.filter(is_del=0, user=self.request.user)
 
+    def get_model_form(self, **kwargs):
+        form = super(ArticleAdmin, self).get_model_form(**kwargs)
+        form.base_fields['user'].initial = self.request.user
+        return form
+
 
 class TopicAdmin(CommonAdmin):
     list_display = ['title', 'cover_img', 'desc', 'hits', 'user', 'hits', 'is_recommend', 'add_time']
@@ -45,6 +50,11 @@ class TopicAdmin(CommonAdmin):
             return qs.filter(is_del=0, is_recommend=0)
         return qs.filter(is_del=0, is_recommend=0, user=self.request.user)
 
+    def get_model_form(self, **kwargs):
+        form = super(TopicAdmin, self).get_model_form(**kwargs)
+        form.base_fields['user'].initial = self.request.user
+        return form
+
 
 class RecommendAdmin(CommonAdmin):
     list_display = ['title', 'cover_img', 'desc', 'hits', 'user', 'hits', 'is_recommend', 'add_time']
@@ -56,6 +66,11 @@ class RecommendAdmin(CommonAdmin):
         if self.request.user.is_superuser:
             return qs.filter(is_del=0, is_recommend=1)
         return qs.filter(is_del=0, is_recommend=1, user=self.request.user)
+
+    def get_model_form(self, **kwargs):
+        form = super(RecommendAdmin, self).get_model_form(**kwargs)
+        form.base_fields['user'].initial = self.request.user
+        return form
 
 
 class TopicDetailAdmin(CommonAdmin):
@@ -74,6 +89,11 @@ class TopicDetailAdmin(CommonAdmin):
             kwargs["queryset"] = Topic.objects.filter(is_del=0, is_recommend=0)
         return super(TopicDetailAdmin, self).formfield_for_dbfield(db_field, **kwargs)
 
+    def get_model_form(self, **kwargs):
+        form = super(TopicDetailAdmin, self).get_model_form(**kwargs)
+        form.base_fields['user'].initial = self.request.user
+        return form
+
 
 class RecommendDetailAdmin(CommonAdmin):
     list_display = ['recommend', 'article', 'user', 'add_time']
@@ -90,6 +110,11 @@ class RecommendDetailAdmin(CommonAdmin):
         if db_field.name == "recommend":
             kwargs["queryset"] = Recommend.objects.filter(is_del=0, is_recommend=1)
         return super(RecommendDetailAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+
+    def get_model_form(self, **kwargs):
+        form = super(RecommendDetailAdmin, self).get_model_form(**kwargs)
+        form.base_fields['user'].initial = self.request.user
+        return form
 
 
 xadmin.site.register(Banner, BannerAdmin)

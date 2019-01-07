@@ -21,6 +21,11 @@ class VideoCollectionAdmin(CommonAdmin):
             return qs.filter(is_del=0)
         return qs.filter(is_del=0, user=self.request.user)
 
+    def get_model_form(self, **kwargs):
+        form = super(VideoCollectionAdmin, self).get_model_form(**kwargs)
+        form.base_fields['user'].initial = self.request.user
+        return form
+
 
 class VideoAdmin(CommonAdmin):
     list_display = ['name', 'desc', 'date', 'user', 'file', 'add_time']
@@ -34,6 +39,11 @@ class VideoAdmin(CommonAdmin):
             return qs.filter(is_del=0)
         return qs.filter(is_del=0, user=self.request.user)
 
+    def get_model_form(self, **kwargs):
+        form = super(VideoAdmin, self).get_model_form(**kwargs)
+        form.base_fields['user'].initial = self.request.user
+        return form
+
 
 class VideoCollectionDetailAdmin(CommonAdmin):
     list_display = ['video_collection', 'video', 'user', 'add_time']
@@ -45,6 +55,11 @@ class VideoCollectionDetailAdmin(CommonAdmin):
         if self.request.user.is_superuser:
             return qs.filter(is_del=0)
         return qs.filter(is_del=0, user=self.request.user)
+
+    def get_model_form(self, **kwargs):
+        form = super(VideoCollectionDetailAdmin, self).get_model_form(**kwargs)
+        form.base_fields['user'].initial = self.request.user
+        return form
 
     # def formfield_for_dbfield(self, db_field, **kwargs):
     #     if db_field.name == "video":

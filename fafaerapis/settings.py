@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'photos.apps.PhotosConfig',
     'news.apps.NewsConfig',
     'appintro.apps.AppintroConfig',
+    'public_welfare.apps.PublicWelfareConfig',
     'markdownx'
 ]
 
