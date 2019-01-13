@@ -109,11 +109,17 @@ if not DEBUG:
     ]
 
 
+# 全局400页面配置
+handler400 = 'common.exceptions.bad_request'
+
 # 全局403页面配置
-handler403 = 'users.views.page_forbidden'
+# handler403 = 'users.views.page_forbidden'
+handler403 = 'common.exceptions.permission_denied'
 
 # 全局404页面配置
-handler404 = 'users.views.page_not_found'
+# handler404 = 'users.views.page_not_found'
+handler404 = 'common.exceptions.page_not_found'
 
 # 全局500页面配置
-handler500 = 'users.views.server_error'
+# handler500 = 'users.views.server_error'
+handler500 = 'common.exceptions.server_error'
